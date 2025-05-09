@@ -1,7 +1,7 @@
 
 self.__uv$config = {
     prefix: '/active/go/',
-    bare:'https://nauka.politechnika-nova.edu.pl',
+    bare:'https://petezahserver.electronicajck.com/bare/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/active/uv/uv.handler.js',
