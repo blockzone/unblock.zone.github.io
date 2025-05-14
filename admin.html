@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+  <title>unblockzone - admin room</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      text-transform: lowercase;
+      scrollbar-width: thin;
+      scrollbar-color: #333333 #111111;
+    }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #f8f9fa;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add these styles */
+body {
+  background: #000;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    top: auto;
+  }
+
+  .sidebar:hover {
+    width: 100%;
+  }
+
+  .sidebar ul {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    height: 100%;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .text {
+    font-size: 0.8rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding-bottom: 60px;
+  }
+
+  .games-container {
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .flip-card {
+    width: 100%;
+  }
+}
+
+// Remove the particlesJS initialization and add:
+VANTA.FOG({
+  el: "body",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+});
+
+
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 40px);
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #343a40;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
+
+.sidebar:hover {
+  width: 15vw;
+}
+
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;
+  list-style-type: none;
+}
+
+.sidebar a {
+  color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 2vh;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sidebar a:hover {
+  background: #495057;
+  transform: scale(1.05);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  font-size: 1.3rem;
+}
+
+.sidebar:hover .text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.highlighted a {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 6vw;
+  width: calc(100% - 6vw);
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4.5vw;
+  width: calc(100% - 4.5vw);
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.content-area {
+  flex-grow: 1;
+  height: calc(100% - 70px);
+  position: relative;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.home-screen {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.url-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.url-bar-icons i {
+  cursor: pointer;
+  font-size: 18px;
+  color: #ced4da;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.url-bar-icons i:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+body.dark-mode {
+  background: #000 !important;
+}
+
+body.dark-mode .browser-header,
+body.dark-mode .sidebar {
+  background-color: #000;
+}
+
+body.dark-mode .url-bar-wrapper {
+  background-color: #222;
+}
+
+body.dark-mode .popup {
+  background-color: #111;
+}
+
+body.incognito {
+  background: url('https://garden.spoonflower.com/c/15197924/p/f/m/xIIl333PyyzkyIvJPgPxHyC8Zvdl-kAWYNamSdb5DXXqqKQU3gyFusuInw/Charcoal%20Grey%20Dark%20Gray%20Solid%20%234b4646.jpg') center/cover fixed !important;
+}
+
+body.incognito .browser-header,
+body.incognito .sidebar {
+  background-color: #222;
+}
+
+body.incognito .url-bar-wrapper {
+  background-color: #444;
+}
+
+body.light-mode {
+  background: #ffffff !important;
+  color: #333333 !important;
+}
+
+body.light-mode .browser-header,
+body.light-mode .sidebar {
+  background-color: #f8f9fa !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body.light-mode .url-bar-wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6;
+}
+
+body.light-mode .url-bar {
+  color: #333333 !important;
+}
+
+body.light-mode .sidebar a {
+  color: #333333 !important;
+}
+
+body.light-mode .action-btn {
+  color: #333333 !important;
+}
+
+body.light-mode .url-bar-icons i {
+  color: #333333 !important;
+}
+
+                    #vanta-bg {
+            width: 100%;
+            height: 100%;
+    }
+    
+    #vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+    .sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #3d4060;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
+
+.sidebar a:hover {
+  background: #2d3048; /* Darker version of #3d4060 */
+  transform: scale(1.05);
+}
+
+    .password-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+}
+
+.password-container {
+  background: rgba(61, 64, 96, 0.4);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(123, 129, 162, 0.2);
+  animation: containerGlow 2s infinite alternate;
+}
+
+.password-content {
+  text-align: center;
+}
+
+.password-content h2 {
+  color: #fff;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  animation: textGlow 1.5s infinite alternate;
+}
+
+.password-input-container {
+  position: relative;
+  margin: 2rem 0;
+}
+
+#password-input {
+  width: 300px;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  outline: none;
+  text-align: center;
+}
+
+.password-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #3b4057, #4d5389, #5b5b7f);
+  transform-origin: left;
+  animation: lineAnimation 2s infinite;
+}
+
+.password-error {
+  color: #ff4444;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@keyframes containerGlow {
+  0% { box-shadow: 0 0 30px rgba(123, 129, 162, 0.2); }
+  100% { box-shadow: 0 0 50px rgba(123, 129, 162, 0.4); }
+}
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+  100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+}
+
+@keyframes lineAnimation {
+  0% { transform: scaleX(0); }
+  50% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+.content-hidden {
+  display: none;
+}
+
+.password-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.password-container {
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.password-content h2 {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: lowercase;
+}
+
+#password-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: #2a2a2a;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  text-transform: lowercase;
+}
+
+.password-error {
+  color: #ff4444;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Admin panel styles */
+.admin-panel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+  z-index: 1000;
+  display: none;
+}
+
+.admin-controls h3 {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+}
+
+.control-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.control-buttons button {
+  background: #2a2a2a;
+  border: none;
+  padding: 0.5rem;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: lowercase;
+  transition: background 0.2s;
+}
+
+.control-buttons button:hover {
+  background: #3a3a3a;
+}
+
+/* Effect classes */
+.frozen {
+  pointer-events: none !important;
+}
+
+.inverted {
+  filter: invert(1);
+}
+
+.floating {
+  animation: float 3s infinite ease-in-out;
+}
+
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  25% { transform: translate(-5px, 5px); }
+  50% { transform: translate(5px, -5px); }
+  75% { transform: translate(-5px, -5px); }
+  100% { transform: translate(0); }
+}
+
+/* Admin Panel Styles */
+.admin-panel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-controls h3 {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+}
+
+.control-buttons {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.control-buttons button {
+  background: #2a2a2a;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: lowercase;
+  transition: background 0.2s, transform 0.2s;
+  width: 100%;
+}
+
+.control-buttons button:hover {
+  background: #3a3a3a;
+  transform: translateY(-2px);
+}
+
+.control-buttons button:active {
+  transform: translateY(0);
+}
+
+/* Effect Styles */
+.frozen * {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.frozen .admin-panel,
+.frozen .admin-panel * {
+  pointer-events: auto !important;
+}
+
+.glitch-effect {
+  animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-5px, 5px);
+  }
+  40% {
+    transform: translate(5px, -5px);
+  }
+  60% {
+    transform: translate(-5px, -5px);
+  }
+  80% {
+    transform: translate(5px, 5px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Rickroll Styles */
+#rickroll-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+}
+
+#rickroll-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#rickroll-frame {
+  position: relative;
+  z-index: 10001;
+  width: 100%;
+  height: 100%;
+}
+
+    
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li>
+          <a href="/index.html" class="home-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-house"></i></div>
+              <div class="text">home</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/g.html" class="games-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
+              <div class="text">games</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/a.html" class="apps-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-mobile"></i></div>
+              <div class="text">apps</div>
+            </div>
+          </a>
+        </li>
+        <li class="highlighted">
+          <a href="/p.html" class="proxy-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <div class="text">proxy</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/s.html" class="settings-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-cog"></i></div>
+              <div class="text">settings</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <script src="settings.js" defer></script>
+  
+    <div class="main-content">
+      <div class="content-area">
+        <div class="home-screen" id="home-screen">
+        </div>
+        <iframe id="main-frame"></iframe>
+      </div>
+    </div>
+  </div>
+
+
+<div id="password-overlay" class="password-overlay">
+  <div class="password-container">
+    <div class="password-content">
+      <h2>admin access</h2>
+      <div class="password-input-container">
+        <input type="password" id="password-input" placeholder="enter password" autocomplete="off">
+      </div>
+      <p id="password-error" class="password-error"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Add admin control panel -->
+<div id="admin-panel" class="admin-panel">
+  <div class="admin-controls">
+    <h3>admin controls</h3>
+    <div class="control-buttons">
+      <button onclick="toggleUserFreeze()">freeze users</button>
+      <button onclick="toggleInvertColors()">invert colors</button>
+      <button onclick="toggleGlitch()">glitch effect</button>
+      <button onclick="toggleFloating()">float elements</button>
+      <button onclick="rickRoll()">rickroll users</button>
+      <button onclick="matrixEffect()">matrix mode</button>
+    </div>
+  </div>
+</div>
+
+<div id="rickroll-container" style="display: none;">
+  <div id="rickroll-overlay"></div>
+  <iframe id="rickroll-frame" width="100%" height="100%" frameborder="0" allow="autoplay"></iframe>
+</div>
+
+    <!-- Wrap your existing content in a div -->
+<div id="main-content" class="content-hidden">
+  <!-- Your existing content goes here -->
+</div>
+
+   <div id="vanta-bg"></div>
+
+    <script src="settings.js" defer></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+<script>
+VANTA.FOG({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x3b4057,
+  midtoneColor: 0x4d5389,
+  lowlightColor: 0x5b5b7f,
+  baseColor: 0x353555,
+  blurFactor: 0.52,
+  speed: 1.60,
+  zoom: 0.90
+})
+</script>
+
+<script>
+  const urlBar = document.getElementById('url-bar');
+  const mainFrame = document.getElementById('main-frame');
+  const homeScreen = document.getElementById('home-screen');
+  const bookmarkIcon = document.getElementById('bookmark-icon');
+
+  let iframeHistory = [];
+  let currentIndex = -1;
+  let currentUrl = '';
+  let activePopup = null;
+
+  // Bookmarks
+  let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+  const bookmarksList = document.getElementById('bookmarks-list');
+
+  // History
+  let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  const historyList = document.getElementById('history-list');
+
+  // Extension States
+  const extensionStates = {
+      'dark-mode': false,
+      'incognito': false,
+      'download-manager': false,
+      'ad-blocker': false,
+      'light-mode': false
+  };
+
+  function updateIframe(originalUrl) {
+    const cleanedUrl = originalUrl.replace(/^https?:\/\//, '');
+    const proxiedUrl = "https://blockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+
+    mainFrame.src = proxiedUrl;
+    mainFrame.style.display = "block";
+    homeScreen.style.display = "none";
+
+    urlBar.value = originalUrl;
+    currentUrl = originalUrl;
+
+    if (bookmarks.some(bookmark => bookmark.url === currentUrl)) {
+        bookmarkIcon.classList.add('bookmarked');
+    } else {
+        bookmarkIcon.classList.remove('bookmarked');
+    }
+  }
+
+  function navigateToUrl(input) {
+    if (!input.trim()) return;
+
+    let formattedUrl = input.trim();
+
+    if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
+      if (formattedUrl.includes(".")) {
+        formattedUrl = "https://" + formattedUrl;
+      } else {
+        formattedUrl = "https://duckduckgo.com/?q=" + encodeURIComponent(formattedUrl);
+      }
+    }
+
+    iframeHistory = iframeHistory.slice(0, currentIndex + 1);
+    iframeHistory.push(formattedUrl);
+    currentIndex++;
+    updateIframe(formattedUrl);
+
+    addSearchToHistory(formattedUrl);
+  }
+
+  urlBar.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      navigateToUrl(urlBar.value);
+    }
+  });
+
+  document.getElementById("back-btn").onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("forward-btn").onclick = () => {
+    if (currentIndex < iframeHistory.length - 1) {
+      currentIndex++;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("reload-btn").onclick = () => {
+    if (currentIndex >= 0) {
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  function bookmarkCurrentPage() {
+    if (!currentUrl) return;
+
+    const pageTitle = currentUrl;
+    const bookmark = { url: currentUrl, title: pageTitle };
+
+    const isBookmarked = bookmarks.some(b => b.url === currentUrl);
+
+    if (isBookmarked) {
+      bookmarks = bookmarks.filter(b => b.url !== currentUrl);
+      bookmarkIcon.classList.remove('bookmarked');
+    } else {
+      bookmarks.push(bookmark);
+      bookmarkIcon.classList.add('bookmarked');
+    }
+
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  }
+
+  function addSearchToHistory(url) {
+    searchHistory.unshift(url);
+    searchHistory = searchHistory.slice(0, 10);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  }
+
+  function toggleExtension(extensionName) {
+    extensionStates[extensionName] = !extensionStates[extensionName];
+    const toggleElement = document.querySelector(`.extension-toggle[data-extension="${extensionName}"] i`);
+
+    if (extensionStates[extensionName]) {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.add('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('lightMode', 'enabled');
+      }
+    } else {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.remove('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.remove('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('lightMode', 'disabled');
+      }
+    }
+  }
+
+  if (localStorage.getItem('lightMode') === 'enabled') {
+    document.body.classList.add('light-mode');
+    extensionStates['light-mode'] = true;
+  }
+
+  function loadSavedExtensionStates() {
+    const savedStates = JSON.parse(localStorage.getItem('extensionStates')) || {};
+    Object.keys(savedStates).forEach(extension => {
+      if (savedStates[extension]) {
+        extensionStates[extension] = true;
+        applyExtensionState(extension, true);
+      }
+    });
+  }
+
+  function applyExtensionState(extensionName, state) {
+    switch (extensionName) {
+      case 'dark-mode':
+        document.body.classList.toggle('dark-mode', state);
+        break;
+      case 'incognito':
+        document.body.classList.toggle('incognito', state);
+        break;
+      case 'ad-blocker':
+        state ? enableAdBlocker() : disableAdBlocker();
+        break;
+      case 'light-mode':
+        document.body.classList.toggle('light-mode', state);
+        break;
+    }
+  }
+
+  function enableAdBlocker() {
+    const adPatterns = [
+      'ads', 'advertisement', 'banner', 'sponsor', 'advertising',
+      'google_ads', 'adsense', 'advert', 'promotions', 'sponsored'
+    ];
+    setInterval(() => {
+      if (extensionStates['ad-blocker']) {
+        const elements = document.querySelectorAll('iframe, div, img, a');
+        elements.forEach(el => {
+          const str = (el.id + ' ' + el.className + ' ' + el.src + ' ' + el.href).toLowerCase();
+          if (adPatterns.some(pattern => str.includes(pattern))) {
+            el.style.display = 'none';
+          }
+        });
+      }
+    }, 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSavedExtensionStates();
+
+    const theme = window.theme || {};
+
+  <script src="three.r134.min.js"></script>
+<script src="vanta.fog.min.js"></script>
+<script>
+VANTA.FOG({
+  el: "#your-element-selector",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+})
+</script>
+</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      VANTA.FOG({
+        el: "vanta-fog",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0x7c81a2,
+        midtoneColor: 0x0,
+        lowlightColor: 0x6363c5,
+        speed: 1.60,
+        zoom: 0.70
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('password-overlay');
+  const passwordInput = document.getElementById('password-input');
+  const errorMessage = document.getElementById('password-error');
+  const mainContent = document.getElementById('main-content');
+  const correctPassword = 'unblockzone#https://v5';
+
+  // Hide main content initially
+  mainContent.style.display = 'none';
+
+  // Prevent password from being visible in page source
+  const validatePassword = (input) => {
+    return input === atob(btoa(correctPassword));
+  };
+
+  const handlePasswordAttempt = () => {
+    if (validatePassword(passwordInput.value)) {
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        mainContent.style.display = 'block';
+      }, 500);
+    } else {
+      errorMessage.textContent = 'Incorrect password. Try again.';
+      errorMessage.style.opacity = '1';
+      passwordInput.value = '';
+      
+      // Shake animation
+      overlay.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        overlay.style.animation = '';
+      }, 500);
+    }
+  };
+
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      handlePasswordAttempt();
+    }
+  });
+
+  // Prevent right-click
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // Prevent keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.keyCode === 123) { // F12
+      e.preventDefault();
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('password-overlay');
+  const passwordInput = document.getElementById('password-input');
+  const errorMessage = document.getElementById('password-error');
+  const adminPanel = document.getElementById('admin-panel');
+  const correctPassword = 'unblockzone#https://v5';
+
+  const handlePasswordAttempt = () => {
+    if (passwordInput.value === correctPassword) {
+      overlay.style.display = 'none';
+      adminPanel.style.display = 'block';
+    } else {
+      errorMessage.textContent = 'incorrect password. try again.';
+      passwordInput.value = '';
+    }
+  };
+
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      handlePasswordAttempt();
+    }
+  });
+});
+
+// Admin control functions
+let isFrozen = false;
+function toggleUserFreeze() {
+  isFrozen = !isFrozen;
+  document.body.classList.toggle('frozen');
+}
+
+function toggleInvertColors() {
+  document.body.classList.toggle('inverted');
+}
+
+function toggleFloating() {
+  document.querySelectorAll('div, img, button').forEach(element => {
+    element.classList.toggle('floating');
+  });
+}
+
+function toggleGlitch() {
+  document.querySelectorAll('div, img, button').forEach(element => {
+    element.classList.toggle('glitch');
+  });
+}
+
+function rickRoll() {
+  const video = document.createElement('video');
+  video.style.position = 'fixed';
+  video.style.top = '0';
+  video.style.left = '0';
+  video.style.width = '100%';
+  video.style.height = '100%';
+  video.style.zIndex = '10000';
+  video.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+  video.autoplay = true;
+  document.body.appendChild(video);
+  setTimeout(() => video.remove(), 10000);
+}
+
+function matrixEffect() {
+  const canvas = document.createElement('canvas');
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.zIndex = '999';
+  canvas.style.opacity = '0.8';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let chars = '01';
+  chars = chars.split('');
+
+  const fontSize = 10;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+  for (let x = 0; x < columns; x++) drops[x] = 1;
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0F0';
+    ctx.font = fontSize + 'px arial';
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+        drops[i] = 0;
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 33);
+}
+    
+  </script>
+  
+</body>
+</html>
