@@ -608,19 +608,6 @@ body::before {
 
 </style>
 
-<!-- Add this right after the <body> tag -->
-<div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-  <div style="background: #343a40; padding: 2rem; border-radius: 10px; text-align: center;">
-    <h2 style="color: #f8f9fa; margin-bottom: 1rem; font-family: 'Inter', sans-serif;">Password Required</h2>
-    <input type="password" id="password-input" style="padding: 0.5rem; margin-bottom: 1rem; border-radius: 5px; border: none; font-family: 'Inter', sans-serif;" placeholder="Enter password">
-    <button onclick="attemptLogin()" id="submit-button" style="padding: 0.5rem 1rem; background: #495057; color: #f8f9fa; border: none; border-radius: 5px; cursor: pointer; font-family: 'Inter', sans-serif;">Submit</button>
-    <div id="error-message" style="color: #ff4444; margin-top: 1rem; font-family: 'Inter', sans-serif; display: none;">
-      Try again in <span id="timer">5</span> seconds
-    </div>
-    <div id="success-message" class="success-message">Correct!</div>
-  </div>
-</div>
-
 <!-- Wrap your existing content in a div -->
 <div id="main-content" class="content-hidden">
   <!-- Your existing content goes here -->
