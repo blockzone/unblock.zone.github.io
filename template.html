@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+  <title>unblockzone - template</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      text-transform: lowercase;
+      scrollbar-width: thin;
+      scrollbar-color: #333333 #111111;
+    }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #f8f9fa;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add these styles */
+body {
+  background: #000;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    top: auto;
+  }
+
+  .sidebar:hover {
+    width: 100%;
+  }
+
+  .sidebar ul {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    height: 100%;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .text {
+    font-size: 0.8rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding-bottom: 60px;
+  }
+
+  .games-container {
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .flip-card {
+    width: 100%;
+  }
+}
+
+// Remove the particlesJS initialization and add:
+VANTA.FOG({
+  el: "body",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+});
+
+
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 40px);
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #343a40;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
+
+.sidebar:hover {
+  width: 15vw;
+}
+
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;
+  list-style-type: none;
+}
+
+.sidebar a {
+  color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 2vh;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sidebar a:hover {
+  background: #495057;
+  transform: scale(1.05);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  font-size: 1.3rem;
+}
+
+.sidebar:hover .text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.highlighted a {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 6vw;
+  width: calc(100% - 6vw);
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4.5vw;
+  width: calc(100% - 4.5vw);
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.content-area {
+  flex-grow: 1;
+  height: calc(100% - 70px);
+  position: relative;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.home-screen {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.url-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.url-bar-icons i {
+  cursor: pointer;
+  font-size: 18px;
+  color: #ced4da;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.url-bar-icons i:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+body.dark-mode {
+  background: #000 !important;
+}
+
+body.dark-mode .browser-header,
+body.dark-mode .sidebar {
+  background-color: #000;
+}
+
+body.dark-mode .url-bar-wrapper {
+  background-color: #222;
+}
+
+body.dark-mode .popup {
+  background-color: #111;
+}
+
+body.incognito {
+  background: url('https://garden.spoonflower.com/c/15197924/p/f/m/xIIl333PyyzkyIvJPgPxHyC8Zvdl-kAWYNamSdb5DXXqqKQU3gyFusuInw/Charcoal%20Grey%20Dark%20Gray%20Solid%20%234b4646.jpg') center/cover fixed !important;
+}
+
+body.incognito .browser-header,
+body.incognito .sidebar {
+  background-color: #222;
+}
+
+body.incognito .url-bar-wrapper {
+  background-color: #444;
+}
+
+body.light-mode {
+  background: #ffffff !important;
+  color: #333333 !important;
+}
+
+body.light-mode .browser-header,
+body.light-mode .sidebar {
+  background-color: #f8f9fa !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body.light-mode .url-bar-wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6;
+}
+
+body.light-mode .url-bar {
+  color: #333333 !important;
+}
+
+body.light-mode .sidebar a {
+  color: #333333 !important;
+}
+
+body.light-mode .action-btn {
+  color: #333333 !important;
+}
+
+body.light-mode .url-bar-icons i {
+  color: #333333 !important;
+}
+
+                    #vanta-bg {
+            width: 100%;
+            height: 100%;
+    }
+    
+    #vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+    .sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #3d4060;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
+
+.sidebar a:hover {
+  background: #2d3048; /* Darker version of #3d4060 */
+  transform: scale(1.05);
+}
+    
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li>
+          <a href="/index.html" class="home-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-house"></i></div>
+              <div class="text">home</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/g.html" class="games-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
+              <div class="text">games</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/a.html" class="apps-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-mobile"></i></div>
+              <div class="text">apps</div>
+            </div>
+          </a>
+        </li>
+        <li class="highlighted">
+          <a href="/p.html" class="proxy-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <div class="text">proxy</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/s.html" class="settings-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-cog"></i></div>
+              <div class="text">settings</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <script src="settings.js" defer></script>
+  
+    <div class="main-content">
+      <div class="content-area">
+        <div class="home-screen" id="home-screen">
+        </div>
+        <iframe id="main-frame"></iframe>
+      </div>
+    </div>
+  </div>
+
+    <!-- Wrap your existing content in a div -->
+<div id="main-content" class="content-hidden">
+  <!-- Your existing content goes here -->
+</div>
+
+   <div id="vanta-bg"></div>
+
+    <script src="settings.js" defer></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+<script>
+VANTA.FOG({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x3b4057,
+  midtoneColor: 0x4d5389,
+  lowlightColor: 0x5b5b7f,
+  baseColor: 0x353555,
+  blurFactor: 0.52,
+  speed: 1.60,
+  zoom: 0.90
+})
+</script>
+
+<script>
+  const urlBar = document.getElementById('url-bar');
+  const mainFrame = document.getElementById('main-frame');
+  const homeScreen = document.getElementById('home-screen');
+  const bookmarkIcon = document.getElementById('bookmark-icon');
+
+  let iframeHistory = [];
+  let currentIndex = -1;
+  let currentUrl = '';
+  let activePopup = null;
+
+  // Bookmarks
+  let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+  const bookmarksList = document.getElementById('bookmarks-list');
+
+  // History
+  let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  const historyList = document.getElementById('history-list');
+
+  // Extension States
+  const extensionStates = {
+      'dark-mode': false,
+      'incognito': false,
+      'download-manager': false,
+      'ad-blocker': false,
+      'light-mode': false
+  };
+
+  function updateIframe(originalUrl) {
+    const cleanedUrl = originalUrl.replace(/^https?:\/\//, '');
+    const proxiedUrl = "https://blockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+
+    mainFrame.src = proxiedUrl;
+    mainFrame.style.display = "block";
+    homeScreen.style.display = "none";
+
+    urlBar.value = originalUrl;
+    currentUrl = originalUrl;
+
+    if (bookmarks.some(bookmark => bookmark.url === currentUrl)) {
+        bookmarkIcon.classList.add('bookmarked');
+    } else {
+        bookmarkIcon.classList.remove('bookmarked');
+    }
+  }
+
+  function navigateToUrl(input) {
+    if (!input.trim()) return;
+
+    let formattedUrl = input.trim();
+
+    if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
+      if (formattedUrl.includes(".")) {
+        formattedUrl = "https://" + formattedUrl;
+      } else {
+        formattedUrl = "https://duckduckgo.com/?q=" + encodeURIComponent(formattedUrl);
+      }
+    }
+
+    iframeHistory = iframeHistory.slice(0, currentIndex + 1);
+    iframeHistory.push(formattedUrl);
+    currentIndex++;
+    updateIframe(formattedUrl);
+
+    addSearchToHistory(formattedUrl);
+  }
+
+  urlBar.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      navigateToUrl(urlBar.value);
+    }
+  });
+
+  document.getElementById("back-btn").onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("forward-btn").onclick = () => {
+    if (currentIndex < iframeHistory.length - 1) {
+      currentIndex++;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("reload-btn").onclick = () => {
+    if (currentIndex >= 0) {
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  function bookmarkCurrentPage() {
+    if (!currentUrl) return;
+
+    const pageTitle = currentUrl;
+    const bookmark = { url: currentUrl, title: pageTitle };
+
+    const isBookmarked = bookmarks.some(b => b.url === currentUrl);
+
+    if (isBookmarked) {
+      bookmarks = bookmarks.filter(b => b.url !== currentUrl);
+      bookmarkIcon.classList.remove('bookmarked');
+    } else {
+      bookmarks.push(bookmark);
+      bookmarkIcon.classList.add('bookmarked');
+    }
+
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  }
+
+  function addSearchToHistory(url) {
+    searchHistory.unshift(url);
+    searchHistory = searchHistory.slice(0, 10);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  }
+
+  function toggleExtension(extensionName) {
+    extensionStates[extensionName] = !extensionStates[extensionName];
+    const toggleElement = document.querySelector(`.extension-toggle[data-extension="${extensionName}"] i`);
+
+    if (extensionStates[extensionName]) {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.add('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('lightMode', 'enabled');
+      }
+    } else {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.remove('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.remove('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('lightMode', 'disabled');
+      }
+    }
+  }
+
+  if (localStorage.getItem('lightMode') === 'enabled') {
+    document.body.classList.add('light-mode');
+    extensionStates['light-mode'] = true;
+  }
+
+  function loadSavedExtensionStates() {
+    const savedStates = JSON.parse(localStorage.getItem('extensionStates')) || {};
+    Object.keys(savedStates).forEach(extension => {
+      if (savedStates[extension]) {
+        extensionStates[extension] = true;
+        applyExtensionState(extension, true);
+      }
+    });
+  }
+
+  function applyExtensionState(extensionName, state) {
+    switch (extensionName) {
+      case 'dark-mode':
+        document.body.classList.toggle('dark-mode', state);
+        break;
+      case 'incognito':
+        document.body.classList.toggle('incognito', state);
+        break;
+      case 'ad-blocker':
+        state ? enableAdBlocker() : disableAdBlocker();
+        break;
+      case 'light-mode':
+        document.body.classList.toggle('light-mode', state);
+        break;
+    }
+  }
+
+  function enableAdBlocker() {
+    const adPatterns = [
+      'ads', 'advertisement', 'banner', 'sponsor', 'advertising',
+      'google_ads', 'adsense', 'advert', 'promotions', 'sponsored'
+    ];
+    setInterval(() => {
+      if (extensionStates['ad-blocker']) {
+        const elements = document.querySelectorAll('iframe, div, img, a');
+        elements.forEach(el => {
+          const str = (el.id + ' ' + el.className + ' ' + el.src + ' ' + el.href).toLowerCase();
+          if (adPatterns.some(pattern => str.includes(pattern))) {
+            el.style.display = 'none';
+          }
+        });
+      }
+    }, 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSavedExtensionStates();
+
+    const theme = window.theme || {};
+
+  <script src="three.r134.min.js"></script>
+<script src="vanta.fog.min.js"></script>
+<script>
+VANTA.FOG({
+  el: "#your-element-selector",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+})
+</script>
+</script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      VANTA.FOG({
+        el: "vanta-fog",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0x7c81a2,
+        midtoneColor: 0x0,
+        lowlightColor: 0x6363c5,
+        speed: 1.60,
+        zoom: 0.70
+      });
+    });
+  </script>
+  
+</body>
+</html>
