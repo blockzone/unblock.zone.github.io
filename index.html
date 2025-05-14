@@ -1,139 +1,925 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loading...</title>
-    <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>unblockzone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vapor:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png">
 
-        <!-- 100% privacy-first analytics -->
-<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-transform: lowercase;
+      scrollbar-width: thin;
+      scrollbar-color: #333333 #111111;
+    }
+    body, html {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #f8f9fa;
+      color: #f8f9fa;
+      font-family: 'Vapor', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      animation: bodyAnim 1s ease-in-out;
+      background: url('https://img.freepik.com/free-photo/abstract-luxury-blur-dark-grey-black-gradient-used-as-background-studio-wall-display-your-products_1258-63473.jpg?semt=ais_hybrid&w=740') no-repeat center center fixed;
+      background-size: cover;
+    }
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            background-size: 400% 400%;
-            animation: gradientAnimation 8s ease infinite;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 1.5s ease-in-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      z-index: -2;
+      filter: brightness(0.7) blur(3px);
+    }
+    
+    @keyframes bodyAnim {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #adb5bd, #6c757d);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      opacity: 0.6;
+      animation: bubbleAnimation 10s infinite ease-in-out;
+      mix-blend-mode: screen;
+    }
+    
+    .bubble-small {
+      width: 50px;
+      height: 50px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 2s;
+    }
+    
+    .bubble-medium {
+      width: 100px;
+      height: 100px;
+      top: 40%;
+      left: 60%;
+      animation-delay: 4s;
+    }
+    
+    .bubble-large {
+      width: 150px;
+      height: 150px;
+      top: 30%;
+      left: 80%;
+      animation-delay: 6s;
+    }
+    
+    @keyframes bubbleAnimation {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-60px) scale(1.05);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+    }
+    
+    .sidebar {
+      position: fixed;
+      width: 4.5vw;
+      background: #343a40;
+      box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+      height: 100vh;
+      transition: width 0.3s ease-in-out;
+      overflow: hidden;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      transform: translateZ(0);
+    }
+    
+    .sidebar:hover {
+      width: 13vw;
+    }
+    
+    .sidebar ul {
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+      gap: 1rem;
+      padding-top: 2rem;
+    }
+    
+    .sidebar li {
+      display: block;
+    }
+    
+    .sidebar a {
+      color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+      border-radius: 2vh;
+      overflow: hidden;
+      font-weight: bold;
+      padding: 0.5rem 0.8rem;
+    }
+    
+    .sidebar a:hover {
+      background: #495057;
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar .container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar .icon {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
+    .sidebar .nav-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
 
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    
+    .sidebar .text {
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      font-size: 1.3rem;
+    }
+    
+    .sidebar:hover .text {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .sidebar .highlighted a {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .welcome {
+      display: flex;
+      width: 100%;
+      animation: fadeIn 1.5s ease-in-out;
+      margin-left: 12vw;
+      z-index: 2;
+      position: relative;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .welcomeone,
+    .welcometwo {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      width: 50vw;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .welcomeone .text-container {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: fadeSlideIn 1.2s forwards ease-in-out;
+    }
+    
+    .welcomeone h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    
+    .welcomeone h1:hover {
+      transform: scale(1.03);
+    }
+    
+    .splash-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: fadeSlideIn 1.4s forwards ease-in-out;
+      animation-delay: 0.3s;
+      transform: translateX(-30px);
+    }
+    
+    .splash-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      transition: opacity 1s ease;
+    }
+    
+    .welcometwo button {
+      padding: 1.8rem 3.5rem;
+      font-size: 1.6rem;
+      font-family: 'Vapor', sans-serif;
+      font-weight: 700;
+      border: none;
+      border-radius: 100rem;
+      background: linear-gradient(45deg, #343a40, #495057);
+      color: #f8f9fa;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(100, 149, 237, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.3s ease-in-out;
+      animation: buttonBounce 1s ease-in-out infinite;
+    }
+    
+    @keyframes buttonBounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .welcometwo button:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: linear-gradient(45deg, #343a40, #495057);
+      transition: all 0.4s ease;
+      transform: translate(-50%, -50%) rotate(45deg);
+      border-radius: 50%;
+      opacity: 0;
+      z-index: 0;
+    }
+    
+    .welcometwo button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(100, 149, 237, 0.5);
+      filter: brightness(1.2);
+    }
+    
+    .welcometwo button:hover:before {
+      opacity: 1;
+      width: 0;
+      height: 0;
+    }
+    
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 250px;
+      background: #343a40;
+      color: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      z-index: 1000;
+    }
+    
+    /* Glowing Top Line */
+    .popup::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #f8f9fa;
+      box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    
+    /* Show Popup */
+    .popup.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Close Button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #f8f9fa;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .close-btn:hover {
+      color: #ced4da;
+    }
+    
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .fade-in {
+  animation: fadeIn 1.5s ease-in;
+}
 
-        #particles-js {
-            position: absolute;
-            top: 0;
-            left: 0;
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.success-message {
+  color: #4BB543;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.content-hidden {
+  opacity: 0;
+}
+
+.content-visible {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+#particles-js {
+  position: fixed; /* Change from absolute to fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Change from -1 to 1 */
+  pointer-events: none;
+}
+
+body {
+  /* ... other properties ... */
+  z-index: 0;
+  background: url('https://img.freepik.com/free-photo/abstract-luxury-blur-dark-grey-black-gradient-used-as-background-studio-wall-display-your-products_1258-63473.jpg?semt=ais_hybrid&w=740') no-repeat center center fixed;
+  background-size: cover;
+}
+
+body::before {
+  /* ... other properties ... */
+  z-index: 0; /* Change from -2 to 0 */
+}
+
+.welcome {
+  /* ... other properties ... */
+  z-index: 2; /* Ensure it's above particles */
+}
+
+.sidebar {
+  /* ... other properties ... */
+  z-index: 999; /* Already correct, keep it high */
+}
+
+.popup {
+  /* ... other properties ... */
+  z-index: 1000; /* Already correct, keep it highest */
+}
+* {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;  /* This makes it extra bold */
+}
+
+.welcomeone h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+}
+
+.splash-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+}
+
+.sidebar a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+}
+
+.welcometwo button {
+    background: #3d4060;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+}
+
+/* For the password overlay */
+#password-overlay h2,
+#password-overlay input,
+#password-overlay button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+}
+
+                #vanta-bg {
             width: 100%;
             height: 100%;
-        }
+    }
+    
+    #vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
 
-        .loader-container {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
+    .sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #3d4060;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
 
-        .logo {
-            width: 235px;
-            height: 235px;
-            border-radius: 50%;
-            background: url('https://files.catbox.moe/ao6qv3.png') no-repeat center;
-            background-size: cover;
-            margin-bottom: 30px;
-            animation: pulse 1.5s infinite ease-in-out;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); /* Glow effect */
-        }
+.sidebar a:hover {
+  background: #2d3048; /* Darker version of #3d4060 */
+  transform: scale(1.05);
+}
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .progress-bar-container {
-            width: 35%;
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            width: 0;
-            height: 100%;
-            background-color: white;
-            border-radius: 15px;
-            animation: loadProgress 5s linear forwards;
-        }
-
-        @keyframes loadProgress {
-            0% { width: 0; }
-            100% { width: 100%; }
-        }
-    </style>
+</style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    <div class="loader-container">
-        <div class="logo"></div>
-        <div class="progress-bar-container">
-            <div class="progress-bar"></div>
-        </div>
+  <div id="particles-js"></div>
+  <div class="bubble bubble-small"></div>
+  <div class="bubble bubble-medium"></div>
+  <div class="bubble bubble-large"></div>
+
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li>
+          <a href="/index.html" class="home-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-house"></i></div>
+              <div class="text">home</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/g.html" class="games-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
+              <div class="text">games</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/a.html" class="apps-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-mobile"></i></div>
+              <div class="text">apps</div>
+            </div>
+          </a>
+        </li>
+        <li class="highlighted">
+          <a href="/p.html" class="proxy-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <div class="text">proxy</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/s.html" class="settings-link">
+            <div class="nav-container">
+              <div class="icon"><i class="fa-solid fa-cog"></i></div>
+              <div class="text">settings</div>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <script>
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 15, density: { enable: false } },  /* Fewer particles */
-                color: { value: "#ffffff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                move: { enable: true, speed: 2, direction: "random" }
-            },
-            interactivity: {
-                events: { onhover: { enable: false } }
-            }
-        });
+  <script src="admin.js"></script>
 
-        setTimeout(() => {
-            document.body.style.animation = "fadeOut 1s ease-in-out forwards";
-            setTimeout(() => {
-                window.location.href = "/home.html"; // Redirect to custom URL
-            }, 1000); // Wait for fade-out to complete before redirecting
-        }, 5000);
-    </script>
+  <script src="settings.js" defer></script>
+
+  <!-- Wrap your existing content in a div -->
+<div id="main-content" class="content-hidden">
+  <!-- Your existing content goes here -->
+</div>
+
+   <div id="vanta-bg"></div>
+      
+  <div class="welcome">
+    <div class="welcomeone">
+      <div class="text-container">
+        <h1>unblockzone v5</h1>
+        <div class="splash-wrapper">
+          <div class="splash-text" id="splash-text">welcome to unblockzone</div>
+        </div>
+      </div>
+    </div>
+    <div class="welcometwo">
+      <button onclick="window.location.href = '/tabs.html'">get started!</button>
+    </div>
+  </div>
+
+  <div id="particles-js"></div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <button class="close-btn" onclick="closePopup()">✖</button>
+    <p><strong>notify - unblockzone</strong></p>
+    <p>welcome to unblockzone v5! updates - not released yet</p>
+  </div>
+ 
+<!-- Add this in the <head> section -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+</style>
+
+<!-- Add this right after the <body> tag -->
+<div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+  <div style="background: #343a40; padding: 2rem; border-radius: 10px; text-align: center;">
+    <h2 style="color: #f8f9fa; margin-bottom: 1rem; font-family: 'Inter', sans-serif;">Password Required</h2>
+    <input type="password" id="password-input" style="padding: 0.5rem; margin-bottom: 1rem; border-radius: 5px; border: none; font-family: 'Inter', sans-serif;" placeholder="Enter password">
+    <button onclick="attemptLogin()" id="submit-button" style="padding: 0.5rem 1rem; background: #495057; color: #f8f9fa; border: none; border-radius: 5px; cursor: pointer; font-family: 'Inter', sans-serif;">Submit</button>
+    <div id="error-message" style="color: #ff4444; margin-top: 1rem; font-family: 'Inter', sans-serif; display: none;">
+      Try again in <span id="timer">5</span> seconds
+    </div>
+    <div id="success-message" class="success-message">Correct!</div>
+  </div>
+</div>
+
+<!-- Wrap your existing content in a div -->
+<div id="main-content" class="content-hidden">
+  <!-- Your existing content goes here -->
+</div>
+
+   <div id="vanta-bg"></div>
+
+<!-- Add these before the closing </body> tag -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+<script>
+VANTA.FOG({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x3b4057,
+  midtoneColor: 0x4d5389,
+  lowlightColor: 0x5b5b7f,
+  baseColor: 0x353555,
+  blurFactor: 0.64,
+  speed: 1.60,
+  zoom: 0.90
+})
+</script>
+
+
+<!-- Add this script right before the closing </body> tag -->
+<script>
+let isTimerRunning = false;
+
+function isAuthenticated() {
+  return localStorage.getItem('unblockzoneAuth') === 'true';
+}
+
+function setAuthenticated(state) {
+  localStorage.setItem('unblockzoneAuth', state);
+}
+
+function startTimer() {
+  if (isTimerRunning) return;
+  isTimerRunning = true;
+  
+  const errorMsg = document.getElementById('error-message');
+  const submitBtn = document.getElementById('submit-button');
+  const timerDisplay = document.getElementById('timer');
+  
+  errorMsg.style.display = 'block';
+  submitBtn.disabled = true;
+  
+  let timeLeft = 5;
+  
+  const countdown = setInterval(() => {
+    timeLeft--;
+    timerDisplay.innerHTML = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = false;
+      isTimerRunning = false;
+    }
+  }, 1000);
+}
+
+function showSuccessAndFadeIn() {
+  const successMsg = document.getElementById('success-message');
+  const mainContent = document.getElementById('main-content');
+  const overlay = document.getElementById('password-overlay');
+  
+  // Show success message
+  successMsg.style.opacity = '1';
+  
+  // Wait 1 second, then fade out overlay and fade in content
+  setTimeout(() => {
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 1.5s ease';
+    mainContent.classList.remove('content-hidden');
+    mainContent.classList.add('content-visible');
+    
+    // Remove overlay after fade out
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 1500);
+  }, 1000);
+}
+
+function attemptLogin() {
+  const input = document.getElementById('password-input').value;
+  
+  if (input === 'unblockzonebaby') {
+    setAuthenticated(true);
+    showSuccessAndFadeIn();
+  } else {
+    document.getElementById('password-input').value = '';
+    startTimer();
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const mainContent = document.getElementById('main-content');
+  if (isAuthenticated()) {
+    document.getElementById('password-overlay').style.display = 'none';
+    mainContent.classList.remove('content-hidden');
+    mainContent.classList.add('content-visible');
+  }
+});
+
+document.getElementById('password-input').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' && !isTimerRunning) {
+    attemptLogin();
+  }
+});
+</script>
+
+  
+  <script>
+    const splashTexts = [
+      "unblockzone v5 on top",
+      "made for school legends",
+      "you found the secret zone",
+      "how tu mak gam site??",
+      "games updated every week",
+      "made in west millbrook",
+      "gaming unlocked",
+      "made by braybray",
+      "try to make a better site",
+      "plsss stoppp ittt",
+      "powered by chill",
+      "classroom approved (kinda)",
+      "access granted",
+      "no restrictions, just fun",
+      "hidden in html",
+      "now in version 5",
+      "play like nobody's watching",
+      "designed for rebels",
+      "cooler than coolmath",
+      "one click away from freedom"
+    ];
+    let current = 0;
+    const splash = document.getElementById("splash-text");
+    setInterval(() => {
+      splash.style.opacity = 0;
+      setTimeout(() => {
+        current = (current + 1) % splashTexts.length;
+        splash.innerText = splashTexts[current];
+        splash.style.opacity = 1;
+      }, 1000);
+    }, 10000);
+  </script>
+  
+  <script>
+    // Function to show the popup
+    function showPopup() {
+      const popup = document.getElementById("popup");
+      popup.classList.add("show");
+      // Auto-close after 5 seconds
+      setTimeout(() => {
+        closePopup();
+      }, 5000);
+    }
+    
+    // Function to close the popup
+    function closePopup() {
+      const popup = document.getElementById("popup");
+      popup.classList.remove("show");
+    }
+    
+    // Show the popup after 1 second
+    setTimeout(showPopup, 1000);
+  </script>
+  
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        if (document.getElementById("searchBar")) {
+          document.getElementById("searchBar").classList.add("active");
+        }
+      }, 300);
+    });
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define a theme object (you can customize this)
+      const theme = {
+        particleColor: "#adb5bd",
+        particleLinks: "#adb5bd"
+      };
+
+        </script>
+   
+  <script>
+
+particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 40,          // Reduced number for better separation
+      "density": {
+        "enable": true,
+        "value_area": 2000  // Increased area for more separation
+      }
+    },
+    "color": {
+      "value": "#ffffff"    // White particles
+    },
+    "shape": {
+      "type": "circle"
+    },
+    "opacity": {
+      "value": 0.5,        // Increased opacity
+      "random": false,     // Consistent opacity
+      "anim": {
+        "enable": false
+      }
+    },
+    "size": {
+      "value": 4,          // Larger particle size
+      "random": true,
+      "anim": {
+        "enable": false
+      }
+    },
+    "line_linked": {
+      "enable": false      // No connecting lines
+    },
+    "move": {
+      "enable": true,
+      "speed": 1.5,       // Moderate speed
+      "direction": "right",
+      "random": false,
+      "straight": true,    // Straight movement
+      "out_mode": "wrap", // Loop back when reaching edge
+      "bounce": false,
+      "attract": {
+        "enable": false
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": false
+      },
+      "onclick": {
+        "enable": false
+      },
+      "resize": true
+    }
+  },
+  "retina_detect": true
+});
+
+<script>
+  // Add this to your existing scripts
+  window.addEventListener('error', function(e) {
+    if (e.target.tagName.toLowerCase() === 'link' || e.target.tagName.toLowerCase() === 'script') {
+      window.location.href = '/404.html';
+    }
+  }, true);
+
+  // Check if the current page exists
+  fetch(window.location.href)
+    .then(response => {
+      if (!response.ok) {
+        window.location.href = '/404.html';
+      }
+    })
+    .catch(() => {
+      window.location.href = '/404.html';
+    });
+
+  // Handle navigation errors
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+          e.preventDefault();
+          fetch(href)
+            .then(response => {
+              if (!response.ok) {
+                window.location.href = '/404.html';
+              } else {
+                window.location.href = href;
+              }
+            })
+            .catch(() => {
+              window.location.href = '/404.html';
+            });
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
