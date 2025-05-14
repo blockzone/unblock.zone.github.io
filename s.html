@@ -1,1392 +1,785 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>settings</title>
-    <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png" id="favicon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
 
-    <!-- 100% privacy-first analytics -->
-<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <title>unblockzone - settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://files.catbox.moe/ao6qv3.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      text-transform: lowercase;
+      scrollbar-width: thin;
+      scrollbar-color: #333333 #111111;
+    }
 
-    
-    <!-- Tab Cloaking and Emergency Escape Scripts -->
-    <script src="scripts/utilities/tab-cloak.js"></script>
-    <script src="scripts/utilities/emergency-escape.js"></script>
-    
-    <!-- Theme Management Script -->
-    <script src="scripts/utilities/theme.js"></script>
-    <script src="scripts/utilities/message-system.js"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: url('https://img.freepik.com/free-photo/artistic-blurry-colorful-wallpaper-background_58702-8520.jpg?semt=ais_hybrid') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-            font-family: Arial, sans-serif;
-            opacity: 0;
-            animation: fadeIn 1s ease-in forwards;
-            position: relative;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .icons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .icon-container {
-            width: 60px;
-            height: 60px;
-            background-color: black;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            box-shadow: 0 0 10px white;
-        }
-        .icon-container:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px white;
-        }
-        .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        
-        /* Home button styles */
-        .home-icon-container {
-            background-color: black;
-            position: relative;
-        }
-        .home-icon-container::after {
-            content: none;
-        }
-        
-        .coolBlobIdk {
-            position: fixed;
-            bottom: -30%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 400px;
-            background: linear-gradient(135deg, rgba(50, 50, 50, 0.8), rgba(200, 200, 200, 0.6));
-            border-radius: 50%;
-            filter: blur(100px);
-            box-shadow: 0 0 120px rgba(200, 200, 200, 0.5);
-        }
-        #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .title {
-            margin-top: 100px;
-            font-size: 48px;
-            font-weight: bold;
-            text-transform: lowercase;
-            color: white;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-        }
-        .title:hover {
-            transform: scale(1.2);
-        }
-        .long-rectangle {
-            width: 85%;
-            height: auto;
-            min-height: 200px;
-            background-color: black;
-            border-radius: 50px;
-            margin-top: 60px;
-            box-shadow: 0 0 20px white;
-            transition: transform 0.3s ease-in-out;
-            cursor: default;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            font-size: 30px;
-            padding: 20px;
-            margin-bottom: 40px;
-        }
-        .long-rectangle:hover {
-            transform: scale(1.05);
-        }
-        .long-rectangle-title {
-            font-size: 36px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-transform: lowercase;
-        }
-        .line {
-            width: 36%; /* Shortened line to match "theme changer" text */
-            height: 2px;
-            background-color: white;
-            margin: 10px 0;
-            position: relative;
-        }
-        .color-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            margin: 20px 0;
-            padding: 10px;
-        }
-.color-circle {
-    width: 65px;  /* Increased from 50px */
-    height: 65px; /* Increased from 50px */
-    border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    background-color: white;
-    margin: 5px;
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
-.color-circle:hover {
-    transform: scale(1.2);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+body {
+  color: #f8f9fa;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
-        .new-circle-1 { background-image: url('https://seeklogo.com/images/G/google-classroom-logo-AD2BE4B278-seeklogo.com.png'); }
-        .new-circle-2 { background-image: url('https://brandlogos.net/wp-content/uploads/2023/09/duolingo_icon-logo_brandlogos.net_aru6q-512x512.png'); }
-        .new-circle-3 { background-image: url('https://img.icons8.com/?size=512&id=oECahFP3ibID&format=png'); }
-        .new-circle-4 { background-image: url('https://img.icons8.com/color/480/google-docs.png'); }
-        .new-circle-5 { background-image: url('https://img.icons8.com/color/480/google-sheets.png'); }
-        .new-circle-6 { background-image: url('https://img.icons8.com/color/480/google-slides.png'); background-size: 80% auto; background-repeat: no-repeat; }
-        .new-circle-7 { background-image: url('https://play-lh.googleusercontent.com/FfHxiXf0AEElwpDtQA-xZ0oViPXFvb9bMvDiLfwicGxDB9DHjwRGXfTPfub-vamgQik'); }
-        .new-circle-8 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Google_Chrome_Web_Store_icon_2022.svg/1178px-Google_Chrome_Web_Store_icon_2022.svg.png'); }
-        .new-circle-9 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png'); background-size: cover; }
-        .new-circle-10 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png'); background-size: cover; }
-        .new-circle-11 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png'); background-size: cover; }
-        .new-circle-12 { background-image: url('https://static.vecteezy.com/system/resources/previews/032/329/171/non_2x/canva-icon-logo-symbol-free-png.png'); background-size: cover; }
-        .new-circle-13 { background-image: url('https://www.osceolaschools.net/cms/lib/FL50000609/Centricity/Domain/986/Delta%20Math.png'); }
-        .new-circle-14 { background-image: url('https://www.ixl.com/dv3/jYg5YEjxG5lJfNjwW0r4Kw8lo5g/yui3/opengraph/assets/square_og_ixl.png'); }
-        .new-circle-15 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png'); }
-        .new-circle-16 { background-image: url('https://static.vecteezy.com/system/resources/previews/020/964/377/non_2x/gmail-mail-icon-for-web-design-free-png.png'); }
-        .new-circle-17 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg/1101px-Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg.png'); background-size: 90% auto; background-repeat: no-repeat; background-color: white; }
-        .new-circle-18 { background-image: url('https://cdn-icons-png.flaticon.com/512/1384/1384060.png'); background-size: 90% auto; background-repeat: no-repeat; background-color: white; }
-        .new-circle-19 { background-image: url('https://images.vexels.com/media/users/3/157498/isolated/preview/3896ab22c743905501eefb8d22607b2f-old-school-calculator-icon.png'); background-size: cover; background-color: white; }
-        .new-circle-20 { background-image: url('https://files.catbox.moe/ao6qv3.png'); background-size: 90% auto; background-repeat: no-repeat; background-color: white; }
-          
-        /* Tab cloaker - completely hide the labels */
-        .cloak-label {
-            display: none !important;
-        }
-        
-        /* Emergency Escape Key Styles */
-        .escape-key-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin: 15px 0;
-            width: 100%;
-        }
-        
-        .key-option {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid white;
-            border-radius: 10px;
-            padding: 8px 15px;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .key-option:hover, .key-option.active {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-        
-        .key-option.active {
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-        }
-        
-        .key-capture-button {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid white;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 18px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 200px;
-            text-align: center;
-        }
-        
-        .key-capture-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-        
-        .key-capture-button.listening {
-            background-color: rgba(255, 0, 0, 0.3);
-            animation: pulse 1.5s infinite;
-        }
-        
-        .key-sequence {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #ddd;
-            min-height: 24px;
-        }
-        
-        .key-badge {
-            display: inline-block;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid white;
-            border-radius: 5px;
-            padding: 3px 8px;
-            margin: 0 3px;
-            font-size: 14px;
-        }
-        
-        .site-select {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid white;
-            border-radius: 10px;
-            padding: 8px 15px;
-            font-size: 16px;
-            color: white;
-            width: 200px;
-            cursor: pointer;
-            outline: none;
-        }
-        
-        .site-select option {
-            background-color: black;
-            color: white;
-        }
-        
-        .escape-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 10px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .escape-label {
-            font-size: 18px;
-            color: #ddd;
-        }
-        
-        .save-button {
-            background-color: #28a745;
-            border: none;
-            border-radius: 10px;
-            padding: 8px 20px;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-        
-        .save-button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
-        }
-        
-        .status-message {
-            font-size: 14px;
-            margin-top: 10px;
-            color: #28a745;
-            height: 20px;
-        }
-        
-        .custom-url-input {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid white;
-            border-radius: 10px;
-            padding: 8px 15px;
-            font-size: 16px;
-            color: white;
-            width: 250px;
-            outline: none;
-        }
-        
-        /* Toggle Switch Styles */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .toggle-slider {
-            background-color: #28a745;
-        }
-        
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
 
-        /* Add new button style */
-        .about-blank-button {
-            background-color: #000;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            margin: 15px 0;
-        }
+/* Add these styles */
+body {
+  background: #000;
+  min-height: 100vh;
+  width: 100%;
+}
 
-        .about-blank-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-        }
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    top: auto;
+  }
 
-        .about-blank-button:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
+  .sidebar:hover {
+    width: 100%;
+  }
+
+  .sidebar ul {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    height: 100%;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .text {
+    font-size: 0.8rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding-bottom: 60px;
+  }
+
+  .games-container {
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .flip-card {
+    width: 100%;
+  }
+}
+
+// Remove the particlesJS initialization and add:
+VANTA.FOG({
+  el: "body",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+});
+
+
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 40px);
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #343a40;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
+
+.sidebar:hover {
+  width: 15vw;
+}
+
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;
+  list-style-type: none;
+}
+
+.sidebar a {
+  color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 2vh;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sidebar a:hover {
+  background: #495057;
+  transform: scale(1.05);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  font-size: 1.3rem;
+}
+
+.sidebar:hover .text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.highlighted a {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 6vw;
+  width: calc(100% - 6vw);
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4.5vw;
+  width: calc(100% - 4.5vw);
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.content-area {
+  flex-grow: 1;
+  height: calc(100% - 70px);
+  position: relative;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.home-screen {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.url-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.url-bar-icons i {
+  cursor: pointer;
+  font-size: 18px;
+  color: #ced4da;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.url-bar-icons i:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+body.dark-mode {
+  background: #000 !important;
+}
+
+body.dark-mode .browser-header,
+body.dark-mode .sidebar {
+  background-color: #000;
+}
+
+body.dark-mode .url-bar-wrapper {
+  background-color: #222;
+}
+
+body.dark-mode .popup {
+  background-color: #111;
+}
+
+body.incognito {
+  background: url('https://garden.spoonflower.com/c/15197924/p/f/m/xIIl333PyyzkyIvJPgPxHyC8Zvdl-kAWYNamSdb5DXXqqKQU3gyFusuInw/Charcoal%20Grey%20Dark%20Gray%20Solid%20%234b4646.jpg') center/cover fixed !important;
+}
+
+body.incognito .browser-header,
+body.incognito .sidebar {
+  background-color: #222;
+}
+
+body.incognito .url-bar-wrapper {
+  background-color: #444;
+}
+
+body.light-mode {
+  background: #ffffff !important;
+  color: #333333 !important;
+}
+
+body.light-mode .browser-header,
+body.light-mode .sidebar {
+  background-color: #f8f9fa !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body.light-mode .url-bar-wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6;
+}
+
+body.light-mode .url-bar {
+  color: #333333 !important;
+}
+
+body.light-mode .sidebar a {
+  color: #333333 !important;
+}
+
+body.light-mode .action-btn {
+  color: #333333 !important;
+}
+
+body.light-mode .url-bar-icons i {
+  color: #333333 !important;
+}
+
+                    #vanta-bg {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
+    }
+    
+    #vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
 
-        .about-blank-button:hover:after {
-            left: 100%;
-        }
+    .sidebar {
+  position: fixed;
+  width: 6vw;
+  background: #3d4060;
+  box-shadow: 0 0 5px rgba(100, 149, 237, 0.3);
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  transform: translateZ(0);
+  margin-right: -1px;
+}
 
-                                /* Popup Container */
-        .popup {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 250px;
-            background: #222;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            z-index: 1000;
-        }
+.sidebar a:hover {
+  background: #2d3048; /* Darker version of #3d4060 */
+  transform: scale(1.05);
+}
 
-        /* Glowing Top Line */
-        .popup::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: white;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
+/* 404 Styles */
+.error-container {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
 
-        /* Show Popup */
-        .popup.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.error-404 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 8rem;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+  margin-bottom: 1rem;
+  animation: fadeInDown 0.8s ease-out;
+}
 
-        /* Close Button */
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.error-message {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
 
-        .close-btn:hover {
-            color: #ddd;
-        }
-        
-    </style>
+.home-button {
+  position: relative;
+  padding: 15px 30px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fff;
+  background: linear-gradient(45deg, #3d4060, #4d5389);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.home-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255,255,255,0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.home-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(61, 64, 96, 0.4);
+}
+
+.home-button:hover::before {
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add hover animations to existing elements */
+.sidebar a, .action-btn, .url-bar-icons i {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar a:hover, .action-btn:hover, .url-bar-icons i:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+
+.sidebar a:active, .action-btn:active, .url-bar-icons i:active {
+  transform: scale(0.95);
+}
+
+
+</style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    <div class="coolBlobIdk"></div>
-    <div class="title">settings</div>
-    <div class="icons">
-        <a href="/index.html" onclick="event.preventDefault(); window.location.href='/index.html';" class="icon-container"><img src="https://img.icons8.com/ios-filled/50/FFFFFF/home.png" alt="Home" class="icon"></a>
-        <a href="/g.html" onclick="event.preventDefault(); window.location.href='/g.html';" class="icon-container"><img src="https://static-00.iconduck.com/assets.00/console-controller-icon-2048x2048-pmmusn7m.png" alt="Games" class="icon"></a>
-        <a href="/a.html" onclick="event.preventDefault(); window.location.href='/a.html';" class="icon-container"><img src="https://img.icons8.com/ios7/600/FFFFFF/apple-app-store--v2.png" alt="Apps" class="icon"></a>
-        <a href="/e.html" onclick="event.preventDefault(); window.location.href='/e.html';" class="icon-container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0_6HUhLshuftA_sDchc5pEGqTBPa41EO6Xw&s" alt="Exploits" class="icon"></a>
-        <a href="/m.html" onclick="event.preventDefault(); window.location.href='/m.html';" class="icon-container"><img src="https://static-00.iconduck.com/assets.00/film-spool-icon-2048x2048-uk9kbgtd.png" alt="Movies" class="icon"></a>
-        <a href="/s.html" onclick="event.preventDefault(); window.location.href='/s.html';" class="icon-container"><img src="https://img.icons8.com/m_rounded/512/FFFFFF/settings.png" alt="Settings" class="icon"></a>
-    </div>
+  <div id="particles-js"></div>
+  <div class="container">
 
-            <!-- Popup -->
-    <div class="popup" id="popup">
-        <button class="close-btn" onclick="closePopup()">✖</button>
-        <p><strong> notify - unblockzone</strong></p>
-        <p>new themes coming this week/next week! (lebron theme)</p>
-    </div>
 
-    <!-- Tab Cloaker Section -->
-    <div class="long-rectangle">
-        <div class="long-rectangle-title">tab cloaker</div>
-        <div class="line"></div>
-        
-        <div class="color-options">
-            <div class="color-circle new-circle-1" onclick="cloakTab('Google Classroom', 'https://seeklogo.com/images/G/google-classroom-logo-AD2BE4B278-seeklogo.com.png')" title="Google Classroom"></div>
-            <div class="color-circle new-circle-2" onclick="cloakTab('Duolingo - Lessons', 'https://brandlogos.net/wp-content/uploads/2023/09/duolingo_icon-logo_brandlogos.net_aru6q-512x512.png')" title="Duolingo - Lessons"></div>
-            <div class="color-circle new-circle-3" onclick="cloakTab('Home', 'https://img.icons8.com/?size=512&id=oECahFP3ibID&format=png')" title="Home"></div>
-            <div class="color-circle new-circle-4" onclick="cloakTab('Google Docs', 'https://img.icons8.com/color/480/google-docs.png')" title="Google Docs"></div>
-            <div class="color-circle new-circle-5" onclick="cloakTab('Google Sheets', 'https://img.icons8.com/color/480/google-sheets.png')" title="Google Sheets"></div>
-            <div class="color-circle new-circle-6" onclick="cloakTab('Google Slides', 'https://img.icons8.com/color/480/google-slides.png')" title="Google Slides"></div>
-            <div class="color-circle new-circle-7" onclick="cloakTab('PowerSchool Student', 'https://play-lh.googleusercontent.com/FfHxiXf0AEElwpDtQA-xZ0oViPXFvb9bMvDiLfwicGxDB9DHjwRGXfTPfub-vamgQik')" title="PowerSchool Student"></div>
-            <div class="color-circle new-circle-8" onclick="cloakTab('Chrome Web Store', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Google_Chrome_Web_Store_icon_2022.svg/1178px-Google_Chrome_Web_Store_icon_2022.svg.png')" title="Chrome Web Store"></div>
-            <div class="color-circle new-circle-9" onclick="cloakTab('Google Drive - My Drive', 'https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png')" title="Google Drive"></div>
-            <div class="color-circle new-circle-10" onclick="cloakTab('New Tab', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png')" title="New Tab"></div>
-            <div class="color-circle new-circle-11" onclick="cloakTab('Google Chrome', 'https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png')" title="Google Chrome"></div>
-            <div class="color-circle new-circle-12" onclick="cloakTab('Canva', 'https://static.vecteezy.com/system/resources/previews/032/329/171/non_2x/canva-icon-logo-symbol-free-png.png')" title="Canva"></div>
-            <div class="color-circle new-circle-13" onclick="cloakTab('Delta Math', 'https://www.osceolaschools.net/cms/lib/FL50000609/Centricity/Domain/986/Delta%20Math.png')" title="Delta Math"></div>
-            <div class="color-circle new-circle-14" onclick="cloakTab('IXL Math', 'https://www.ixl.com/dv3/jYg5YEjxG5lJfNjwW0r4Kw8lo5g/yui3/opengraph/assets/square_og_ixl.png')" title="IXL Math"></div>
-            <div class="color-circle new-circle-15" onclick="cloakTab('calculator - Google Search', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png')" title="calculator - Google Search"></div>
-            <div class="color-circle new-circle-16" onclick="cloakTab('Inbox', 'https://static.vecteezy.com/system/resources/previews/020/964/377/non_2x/gmail-mail-icon-for-web-design-free-png.png')" title="Inbox"></div>
-            <div class="color-circle new-circle-17" onclick="cloakTab('Outlook - Students', 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg/1101px-Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg.png')" title="Outlook - Students"></div>
-            <div class="color-circle new-circle-18" onclick="cloakTab('YouTube', 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png')" title="YouTube"></div>
-            <div class="color-circle new-circle-19" onclick="cloakTab('Online Calculator', 'https://images.vexels.com/media/users/3/157498/isolated/preview/3896ab22c743905501eefb8d22607b2f-old-school-calculator-icon.png')" title="Online Calculator"></div>
-            <div class="color-circle new-circle-20" onclick="cloakTab('unblockzone', 'https://files.catbox.moe/ao6qv3.png')" title="unblockzone"></div>
+    <script src="settings.js" defer></script>
+  
+    <div class="main-content">
+      <div class="content-area">
+        <div class="home-screen" id="home-screen">
         </div>
+        <iframe id="main-frame"></iframe>
+      </div>
     </div>
-    
-    <!-- Emergency Escape Key Section -->
-    <div class="long-rectangle">
-        <div class="long-rectangle-title">emergency escape</div>
-        <div class="line"></div>
-        
-        <div class="escape-row" style="margin-bottom: 15px;">
-            <div class="escape-label">escape site URL:</div>
-            <input type="text" id="escapeSiteInput" class="input-box" value="https://google.com" placeholder="https://google.com">
-        </div>
-        
-        <div class="escape-row">
-            <div class="escape-label">current escape sequence:</div>
-            <div id="currentEscapeSequence" style="font-weight: bold;">press ESC key 3 times</div>
-        </div>
-        
-        <div id="keySequence" class="key-sequence"></div>
-        
-        <div class="escape-row" style="margin-top: 15px;">
-            <div class="escape-label">record new sequence:</div>
-            <button id="recordSequenceButton" class="cloak-button">record keys</button>
-        </div>
-        
-        <div style="margin-top: 15px; font-size: 16px; color: #ddd; text-align: center;">
-            emergency escape allows you to quickly navigate to a safe site using a key combination.<br>
-            it works on all pages of the website for quick exits.
-        </div>
-        
-        <div id="escapeStatusBox" style="margin-top: 15px; padding: 10px; border-radius: 5px; background-color: rgba(40, 167, 69, 0.2); display: none;">
-            <div id="escapeStatus" style="font-size: 16px; font-weight: bold;"></div>
-        </div>
-        
-        <button class="save-button" onclick="saveEscapeSettings()">save settings</button>
-    </div>
-    
-    <!-- Anti-Close Section -->
-    <div class="long-rectangle">
-        <div class="long-rectangle-title">anti-close protection (beta might not work)</div>
-        <div class="line"></div>
-        
-        <div class="escape-row">
-            <div class="escape-label">prevent accidental tab closing:</div>
-            <label class="toggle-switch">
-                <input type="checkbox" id="antiCloseToggle">
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
-        
-        <div style="margin-top: 15px; font-size: 16px; color: #ddd; text-align: center;">
-            when enabled, you'll see a confirmation dialog when trying to close the tab.<br>
-            this helps prevent accidental tab closures and works across all pages.
-        </div>
-        
-        <div id="antiCloseStatusBox" style="margin-top: 15px; padding: 10px; border-radius: 5px; background-color: rgba(40, 167, 69, 0.2); display: none;">
-            <div id="antiCloseStatus" style="font-size: 16px; font-weight: bold;"></div>
-        </div>
-        
-        <button class="save-button" onclick="toggleAntiClose()">save settings</button>
-    </div>
-    
-    <!-- Open in about:blank section -->
-    <div class="long-rectangle">
-        <div class="long-rectangle-title">open in about:blank</div>
-        <div class="line"></div>
-        
-        <div class="escape-row" style="flex-direction: column; align-items: center;">
-            <button id="newAboutBlank" class="about-blank-button">launch in about:blank</button>
-            <div style="font-size: 14px; color: #aaa; margin-top: 10px; text-align: center; width: 100%;">
-                opens this site in about:blank to help bypass filters and avoid detection
-            </div>
-        </div>
-    </div>
-    
-    <!-- Theme Changer Section -->
-    <div class="long-rectangle">
-        <div class="long-rectangle-title">theme changer</div>
-        <div class="line"></div>
-        
-        <div style="margin: 20px 0; text-align: center;">
-            <div style="display: inline-block; background-color: #000; border-radius: 15px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
-                <div style="color: white; font-size: 18px; margin-bottom: 15px; text-align: center; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
-                    theme changer
-                </div>
-                <div style="display: flex; justify-content: space-around; gap: 15px;">
-                    <!-- Default theme -->
-                    <div class="theme-circle" data-theme="default" style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROdNIejFmjeKC5u6Xq2yqOCa5y-uJseTCTfA&s'); background-size: cover; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.7); transition: transform 0.3s, box-shadow 0.3s;" title="Default"></div>
-                    
-                    <!-- Vanilla Iced Coffee theme -->
-                    <div class="theme-circle" data-theme="vanilla" style="background: linear-gradient(135deg, #e8e1c6 0%, #d6cdb0 100%); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.7); transition: transform 0.3s, box-shadow 0.3s;" title="Vanilla Iced Coffee"></div>
-                    
-                    <!-- Caramel Iced Coffee theme -->
-                    <div class="theme-circle" data-theme="caramel" style="background: linear-gradient(135deg, #cc9544 0%, #a3742d 100%); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.7); transition: transform 0.3s, box-shadow 0.3s;" title="Caramel Iced Coffee"></div>
-                    
-                    <!-- Chocolate Mocha theme -->
-                    <div class="theme-circle" data-theme="chocolate" style="background: linear-gradient(135deg, #5a3925 0%, #3b2516 100%); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.7); transition: transform 0.3s, box-shadow 0.3s;" title="Chocolate Mocha"></div>
-                    
-                    <!-- Strawberry Fun theme -->
-                    <div class="theme-circle" data-theme="strawberry" style="background: linear-gradient(135deg, #d8a7d8 0%, #b987b9 100%); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px rgba(255,255,255,0.7); transition: transform 0.3s, box-shadow 0.3s;" title="Strawberry Fun"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="themeStatusBox" style="margin: 15px auto; padding: 10px; border-radius: 5px; background-color: rgba(40, 167, 69, 0.2); display: none; max-width: 300px; text-align: center;">
-            <div id="themeStatus" style="font-size: 16px; font-weight: bold;"></div>
-        </div>
-        
-        <div style="margin-top: 10px; font-size: 16px; color: #ddd; text-align: center;">
-            choose a theme to change the background and particles across the site.<br>
-            your theme preference will be saved and applied to all pages.
-        </div>
-    </div>
-    
-    <!-- Discord Widget -->
+  </div>
 
-    <script src="scripts/utilities/shared.js"></script>
-    <script>
-        // Initialize key sequence for emergency escape
-        let keySequence = [];
-        let recording = false;
-        let keyListener = null;
-        const KEY_TIMEOUT = 2000; // 2 seconds timeout for key sequence
-        let globalLastKeyTime = 0;
-        let globalEscapeKeyHandler = null;
-        
-        // Load saved key sequence on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            // Initialize theme buttons
-            document.querySelectorAll('.theme-circle').forEach(button => {
-                button.addEventListener('click', function() {
-                    const themeName = this.getAttribute('data-theme');
-                    changeTheme(themeName);
-                });
-            });
-            
-            // Apply anti-close toggle state from localStorage
-            const antiCloseEnabled = localStorage.getItem('antiCloseEnabled') === 'true';
-            document.getElementById('antiCloseToggle').checked = antiCloseEnabled;
-            
-            if (antiCloseEnabled) {
-                applyAntiCloseProtection();
-            }
-            
-            // Load and display saved key sequence
-            const savedKeySequence = JSON.parse(localStorage.getItem('escapeKeySequence') || '[]');
-            keySequence = savedKeySequence;
-            displayKeySequence();
-            
-            // Load saved escape site
-            const savedSiteOption = localStorage.getItem('escapeSiteOption');
-            if (savedSiteOption) {
-                document.getElementById('escapeSiteInput').value = savedSiteOption;
-                updateSiteSelection();
-            }
+    <!-- Wrap your existing content in a div -->
+<div id="main-content" class="content-hidden">
+  <!-- Your existing content goes here -->
+</div>
 
-            // About:blank button - Fixed implementation
-            const aboutBlankBtn = document.getElementById('newAboutBlank');
-            if (aboutBlankBtn) {
-                aboutBlankBtn.addEventListener('click', function() {
-                    console.log('About:blank button clicked');
-                    openAboutBlank();
-                });
-                console.log('About:blank button listener attached');
-            } else {
-                console.error('About:blank button not found in DOM');
-            }
+<!-- Add this HTML just before closing the body tag -->
+<div class="error-container">
+  <div class="error-404">404</div>
+  <div class="error-message">settings is currently being worked on!</div>
+  <button class="home-button" onclick="window.location.href='/index.html'">
+    back to home
+  </button>
+</div>
 
-            // Add code to automatically apply the "Current Page" cloaking by default if no cloak is set
-            if (!localStorage.getItem('cloakedTitle') && !localStorage.getItem('cloakedFavicon')) {
-                cloakTabWithCurrentPage('https://files.catbox.moe/ao6qv3.png');
-            }
+   <div id="vanta-bg"></div>
+
+    <script src="settings.js" defer></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+<script>
+VANTA.FOG({
+  el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x3b4057,
+  midtoneColor: 0x4d5389,
+  lowlightColor: 0x5b5b7f,
+  baseColor: 0x353555,
+  blurFactor: 0.52,
+  speed: 1.60,
+  zoom: 0.90
+})
+</script>
+
+<script>
+  const urlBar = document.getElementById('url-bar');
+  const mainFrame = document.getElementById('main-frame');
+  const homeScreen = document.getElementById('home-screen');
+  const bookmarkIcon = document.getElementById('bookmark-icon');
+
+  let iframeHistory = [];
+  let currentIndex = -1;
+  let currentUrl = '';
+  let activePopup = null;
+
+  // Bookmarks
+  let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+  const bookmarksList = document.getElementById('bookmarks-list');
+
+  // History
+  let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  const historyList = document.getElementById('history-list');
+
+  // Extension States
+  const extensionStates = {
+      'dark-mode': false,
+      'incognito': false,
+      'download-manager': false,
+      'ad-blocker': false,
+      'light-mode': false
+  };
+
+  function updateIframe(originalUrl) {
+    const cleanedUrl = originalUrl.replace(/^https?:\/\//, '');
+    const proxiedUrl = "https://blockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+
+    mainFrame.src = proxiedUrl;
+    mainFrame.style.display = "block";
+    homeScreen.style.display = "none";
+
+    urlBar.value = originalUrl;
+    currentUrl = originalUrl;
+
+    if (bookmarks.some(bookmark => bookmark.url === currentUrl)) {
+        bookmarkIcon.classList.add('bookmarked');
+    } else {
+        bookmarkIcon.classList.remove('bookmarked');
+    }
+  }
+
+  function navigateToUrl(input) {
+    if (!input.trim()) return;
+
+    let formattedUrl = input.trim();
+
+    if (!formattedUrl.startsWith("http://") && !formattedUrl.startsWith("https://")) {
+      if (formattedUrl.includes(".")) {
+        formattedUrl = "https://" + formattedUrl;
+      } else {
+        formattedUrl = "https://duckduckgo.com/?q=" + encodeURIComponent(formattedUrl);
+      }
+    }
+
+    iframeHistory = iframeHistory.slice(0, currentIndex + 1);
+    iframeHistory.push(formattedUrl);
+    currentIndex++;
+    updateIframe(formattedUrl);
+
+    addSearchToHistory(formattedUrl);
+  }
+
+  urlBar.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      navigateToUrl(urlBar.value);
+    }
+  });
+
+  document.getElementById("back-btn").onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("forward-btn").onclick = () => {
+    if (currentIndex < iframeHistory.length - 1) {
+      currentIndex++;
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  document.getElementById("reload-btn").onclick = () => {
+    if (currentIndex >= 0) {
+      updateIframe(iframeHistory[currentIndex]);
+    }
+  };
+
+  function bookmarkCurrentPage() {
+    if (!currentUrl) return;
+
+    const pageTitle = currentUrl;
+    const bookmark = { url: currentUrl, title: pageTitle };
+
+    const isBookmarked = bookmarks.some(b => b.url === currentUrl);
+
+    if (isBookmarked) {
+      bookmarks = bookmarks.filter(b => b.url !== currentUrl);
+      bookmarkIcon.classList.remove('bookmarked');
+    } else {
+      bookmarks.push(bookmark);
+      bookmarkIcon.classList.add('bookmarked');
+    }
+
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  }
+
+  function addSearchToHistory(url) {
+    searchHistory.unshift(url);
+    searchHistory = searchHistory.slice(0, 10);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  }
+
+  function toggleExtension(extensionName) {
+    extensionStates[extensionName] = !extensionStates[extensionName];
+    const toggleElement = document.querySelector(`.extension-toggle[data-extension="${extensionName}"] i`);
+
+    if (extensionStates[extensionName]) {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.add('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('lightMode', 'enabled');
+      }
+    } else {
+      if (extensionName === 'dark-mode') {
+        document.body.classList.remove('dark-mode');
+      } else if (extensionName === 'incognito') {
+        document.body.classList.remove('incognito');
+      } else if (extensionName === 'light-mode') {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('lightMode', 'disabled');
+      }
+    }
+  }
+
+  if (localStorage.getItem('lightMode') === 'enabled') {
+    document.body.classList.add('light-mode');
+    extensionStates['light-mode'] = true;
+  }
+
+  function loadSavedExtensionStates() {
+    const savedStates = JSON.parse(localStorage.getItem('extensionStates')) || {};
+    Object.keys(savedStates).forEach(extension => {
+      if (savedStates[extension]) {
+        extensionStates[extension] = true;
+        applyExtensionState(extension, true);
+      }
+    });
+  }
+
+  function applyExtensionState(extensionName, state) {
+    switch (extensionName) {
+      case 'dark-mode':
+        document.body.classList.toggle('dark-mode', state);
+        break;
+      case 'incognito':
+        document.body.classList.toggle('incognito', state);
+        break;
+      case 'ad-blocker':
+        state ? enableAdBlocker() : disableAdBlocker();
+        break;
+      case 'light-mode':
+        document.body.classList.toggle('light-mode', state);
+        break;
+    }
+  }
+
+  function enableAdBlocker() {
+    const adPatterns = [
+      'ads', 'advertisement', 'banner', 'sponsor', 'advertising',
+      'google_ads', 'adsense', 'advert', 'promotions', 'sponsored'
+    ];
+    setInterval(() => {
+      if (extensionStates['ad-blocker']) {
+        const elements = document.querySelectorAll('iframe, div, img, a');
+        elements.forEach(el => {
+          const str = (el.id + ' ' + el.className + ' ' + el.src + ' ' + el.href).toLowerCase();
+          if (adPatterns.some(pattern => str.includes(pattern))) {
+            el.style.display = 'none';
+          }
         });
-        
-        // Enhanced function to cloak tab with current page name
-        function cloakTabWithCurrentPage(favicon) {
-            // Get the current page name from URL
-            let pageName = 'Unblockzone';
-            
-            // Extract page name from URL
-            const path = window.location.pathname;
-            if (path.includes('/g.html') || path.includes('/g/')) {
-                pageName = 'Games';
-            } else if (path.includes('/a.html') || path.includes('/a/')) {
-                pageName = 'Apps';
-            } else if (path.includes('/m.html') || path.includes('/m/')) {
-                pageName = 'Movies';
-            } else if (path.includes('/e.html') || path.includes('/e/')) {
-                pageName = 'Exploits';
-            } else if (path.includes('/s.html')) {
-                pageName = 'Settings';
-            } else if (path === '/' || path.includes('/index.html')) {
-                pageName = 'Home';
-            }
-            
-            console.log('Cloaking tab with current page name:', pageName);
-            
-            // Set default favicon if not provided
-            if (!favicon) {
-                favicon = 'https://files.catbox.moe/ao6qv3.png';
-            }
-            
-            // Apply the cloak with current page name
-            cloakTab(pageName, favicon);
-            
-            // Show a quick confirmation
-            const notification = document.createElement('div');
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.backgroundColor = 'rgba(40, 167, 69, 0.8)';
-            notification.style.color = 'white';
-            notification.style.padding = '10px 20px';
-            notification.style.borderRadius = '5px';
-            notification.style.zIndex = '9999';
-            notification.style.fontSize = '14px';
-            notification.textContent = `Tab cloaked as "${pageName}"`;
-            
-            document.body.appendChild(notification);
-            setTimeout(function() {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.5s';
-                setTimeout(function() {
-                    if (notification.parentNode) {
-                        document.body.removeChild(notification);
-                    }
-                }, 500);
-            }, 2000);
-        }
+      }
+    }, 1000);
+  }
 
-        // Settings page specific code
-        // Setup global key listener for emergency escape
-        function setupGlobalKeyListener(keySeq, site) {
-            // Remove any existing listener
-            if (globalEscapeKeyHandler) {
-                document.removeEventListener('keydown', globalEscapeKeyHandler);
-            }
-            
-            if (!keySeq || keySeq.length === 0) return;
-            
-            console.log('Setting up global key listener for emergency escape');
-            
-            let currentIndex = 0;
-            let lastKeyTime = 0;
-            
-            globalEscapeKeyHandler = function(e) {
-                const now = Date.now();
-                
-                // Reset if it's been too long since the last key
-                if (now - lastKeyTime > KEY_TIMEOUT && currentIndex > 0) {
-                    currentIndex = 0;
-                }
-                
-                lastKeyTime = now;
-                
-                const expectedKey = keySeq[currentIndex];
-                
-                // Check if modifiers match
-                const modifiersMatch = 
-                    (!expectedKey.ctrlKey || e.ctrlKey) &&
-                    (!expectedKey.altKey || e.altKey) &&
-                    (!expectedKey.shiftKey || e.shiftKey) &&
-                    (!expectedKey.metaKey || e.metaKey);
-                
-                // Check if the key matches
-                if (modifiersMatch && e.key === expectedKey.key) {
-                    currentIndex++;
-                    
-                    // If we've matched the entire sequence
-                    if (currentIndex === keySeq.length) {
-                        // Reset for next time
-                        currentIndex = 0;
-                        
-                        // Navigate to the escape site
-                        console.log('Emergency escape sequence detected, navigating to:', site);
-                        window.location.href = site;
-                    }
-                } else {
-                    // Reset on mismatch
-                    currentIndex = 0;
-                }
-            };
-            
-            document.addEventListener('keydown', globalEscapeKeyHandler);
-            console.log('Global key listener set up for emergency escape');
-        }
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSavedExtensionStates();
 
-        function startKeyListening() {
-            const keyCaptureButton = document.getElementById('keyCaptureButton');
-            keyCaptureButton.textContent = 'Recording... Click to stop';
-            keyCaptureButton.classList.add('listening');
-            recording = true;
-            
-            keySequence = [];
-            document.getElementById('keySequence').innerHTML = '';
-            
-            keyListener = function(e) {
-                if (['Control', 'Alt', 'Shift', 'Meta'].includes(e.key)) {
-                    return;
-                }
-                
-                const now = Date.now();
-                
-                if (keySequence.length > 0 && now - globalLastKeyTime > KEY_TIMEOUT) {
-                    keySequence = [];
-                    document.getElementById('keySequence').innerHTML = '';
-                }
-                
-                globalLastKeyTime = now;
-                
-                let keyName = e.key;
-                
-                if (keyName === ' ') keyName = 'Space';
-                if (keyName === 'Control') keyName = 'Ctrl';
-                if (keyName === 'Escape') keyName = 'Esc';
-                if (keyName.length === 1) keyName = keyName.toUpperCase();
-                
-                const modifiers = [];
-                if (e.ctrlKey && e.key !== 'Control') modifiers.push('Ctrl');
-                if (e.altKey && e.key !== 'Alt') modifiers.push('Alt');
-                if (e.shiftKey && e.key !== 'Shift') modifiers.push('Shift');
-                if (e.metaKey && e.key !== 'Meta') modifiers.push('Meta');
-                
-                const keyObj = {
-                    key: e.key,
-                    code: e.code,
-                    name: keyName,
-                    modifiers: modifiers,
-                    ctrlKey: e.ctrlKey,
-                    altKey: e.altKey,
-                    shiftKey: e.shiftKey,
-                    metaKey: e.metaKey
-                };
-                
-                keySequence.push(keyObj);
-                displayKeySequence();
-                e.preventDefault();
-            };
-            
-            window.addEventListener('keydown', keyListener);
-        }
-        
-        function stopKeyListening() {
-            const keyCaptureButton = document.getElementById('keyCaptureButton');
-            keyCaptureButton.textContent = 'Click to record keys';
-            keyCaptureButton.classList.remove('listening');
-            recording = false;
-            
-            if (keyListener) {
-                window.removeEventListener('keydown', keyListener);
-                keyListener = null;
-            }
-        }
-        
-        function displayKeySequence() {
-            const sequenceElement = document.getElementById('keySequence');
-            if (!sequenceElement) {
-                console.warn('keySequence element not found in DOM');
-                return;
-            }
-            
-            sequenceElement.innerHTML = '';
-            
-            if (keySequence.length === 0) {
-                return;
-            }
-            
-            keySequence.forEach((keyObj, index) => {
-                let keyText = '';
-                
-                if (keyObj.modifiers && keyObj.modifiers.length > 0) {
-                    keyText = keyObj.modifiers.join(' + ') + ' + ';
-                }
-                
-                keyText += keyObj.name || keyObj.key;
-                
-                const badge = document.createElement('span');
-                badge.className = 'key-badge';
-                badge.textContent = keyText;
-                
-                sequenceElement.appendChild(badge);
-                
-                if (index < keySequence.length - 1) {
-                    const arrow = document.createElement('span');
-                    arrow.textContent = ' → ';
-                    sequenceElement.appendChild(arrow);
-                }
-            });
-        }
-        
-        function saveEscapeKey() {
-            const siteSelect = document.getElementById('escapeSiteInput');
-            let site = siteSelect.value.trim();
-            
-            if (site === 'custom') {
-                const customUrl = document.getElementById('customSiteUrl').value.trim();
-                if (!customUrl) {
-                    document.getElementById('escapeStatus').textContent = 'Please enter a valid URL!';
-                    setTimeout(() => {
-                        document.getElementById('escapeStatus').textContent = '';
-                    }, 3000);
-                    return;
-                }
-                
-                if (!customUrl.startsWith('http://') && !customUrl.startsWith('https://')) {
-                    site = 'https://' + customUrl;
-                } else {
-                    site = customUrl;
-                }
-            }
-            
-            if (keySequence.length === 0) {
-                document.getElementById('escapeStatus').textContent = 'Please record a key sequence first!';
-                setTimeout(() => {
-                    document.getElementById('escapeStatus').textContent = '';
-                }, 3000);
-                return;
-            }
-            
-            localStorage.setItem('escapeKeySequence', JSON.stringify(keySequence));
-            localStorage.setItem('escapeSite', site);
-            localStorage.setItem('escapeSiteOption', siteSelect.value);
-            
-            if (typeof setupGlobalKeyListener === 'function') {
-                setupGlobalKeyListener(keySequence, site);
-            } else {
-                console.error('setupGlobalKeyListener function not found in shared.js');
-            }
-            
-            document.getElementById('escapeStatus').textContent = 'Emergency escape sequence saved!';
-            setTimeout(() => {
-                document.getElementById('escapeStatus').textContent = '';
-            }, 3000);
-        }
-        
-        // Direct implementation of anti-close protection
-        let beforeUnloadHandler = null;
-        
-        function toggleAntiClose() {
-            const antiCloseSwitch = document.getElementById('antiCloseToggle');
-            const isEnabled = antiCloseSwitch.checked;
-            
-            if (isEnabled) {
-                applyAntiCloseProtection();
-            } else {
-                removeAntiCloseProtection();
-            }
-            
-            // Save settings
-            localStorage.setItem('antiCloseEnabled', isEnabled);
-            sessionStorage.setItem('antiCloseEnabled', isEnabled);
-            
-            console.log('Anti-close toggled:', isEnabled);
-        }
-        
-        function applyAntiCloseProtection() {
-            // Remove any existing handler first
-            removeAntiCloseProtection();
-            
-            // Create and add a new handler
-            beforeUnloadHandler = function(e) {
-                // Standard way to show a confirmation dialog when closing the tab
-                e.preventDefault();
-                
-                // Chrome requires returnValue to be set
-                e.returnValue = 'are you sure you want to leave this page?';
-                
-                // This message will be shown in some browsers, others show their own message
-                return 'are you sure you want to leave this page?';
-            };
-            
-            window.addEventListener('beforeunload', beforeUnloadHandler);
-            console.log('anti-close protection applied');
-        }
-        
-        function removeAntiCloseProtection() {
-            if (beforeUnloadHandler) {
-                window.removeEventListener('beforeunload', beforeUnloadHandler);
-                beforeUnloadHandler = null;
-                console.log('anti-close protection removed');
-            }
-        }
+    const theme = window.theme || {};
 
-        // Function to open the site in about:blank - simplified for reliability
-        function openAboutBlank() {
-            console.log('opening about:blank window...');
-            
-            try {
-                // Open a new window with about:blank
-                const newWindow = window.open('about:blank', '_blank');
-                
-                if (!newWindow) {
-                    alert('pop-up blocked! please allow pop-ups for this site in your browser settings.');
-                    return;
-                }
-                
-                console.log('new window opened successfully');
-                
-                // Get the current URL
-                const currentUrl = window.location.href;
-                console.log('current URL:', currentUrl);
-                
-                // Create HTML content with iframe - using string concatenation to avoid template literal issues
-                const html = '<!DOCTYPE html>' +
-                    '<html>' +
-                    '<head>' +
-                    '<title>calculator - Google Search</title>' +
-                    '<style>' +
-                    'body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }' +
-                    'iframe { width: 100%; height: 100%; border: none; }' +
-                    '</style>' +
-                    '</head>' +
-                    '<body>' +
-                    '<iframe src="' + currentUrl + '" allowfullscreen></iframe>' +
-                    '</body>' +
-                    '</html>';
-                
-                // Write content to new window
-                newWindow.document.open();
-                newWindow.document.write(html);
-                newWindow.document.close();
-                
-                // Show success notification
-                const notification = document.createElement('div');
-                notification.style.position = 'fixed';
-                notification.style.bottom = '20px';
-                notification.style.left = '50%';
-                notification.style.transform = 'translateX(-50%)';
-                notification.style.backgroundColor = 'rgba(40, 167, 69, 0.9)';
-                notification.style.color = 'white';
-                notification.style.padding = '10px 20px';
-                notification.style.borderRadius = '5px';
-                notification.style.zIndex = '9999';
-                notification.textContent = 'site opened in about:blank mode';
-                
-                document.body.appendChild(notification);
-                setTimeout(function() {
-                    notification.style.opacity = '0';
-                    notification.style.transition = 'opacity 0.5s';
-                    setTimeout(function() {
-                        document.body.removeChild(notification);
-                    }, 500);
-                }, 2000);
-                
-            } catch (error) {
-                console.error('error opening about:blank:', error);
-                alert('failed to open in about:blank. please check your browser settings and try again.');
-            }
-        }
-    </script>
+  <script src="three.r134.min.js"></script>
+<script src="vanta.fog.min.js"></script>
+<script>
+VANTA.FOG({
+  el: "#your-element-selector",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  highlightColor: 0x7c81a2,
+  midtoneColor: 0x0,
+  lowlightColor: 0x6363c5,
+  speed: 1.60,
+  zoom: 0.70
+})
+</script>
+</script>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Initialize particles with theme colors
-        document.addEventListener('DOMContentLoaded', function() {
-            const theme = window.getCurrentTheme ? window.getCurrentTheme() : {
-                particleColor: "#aaa",
-                particleLinks: "#aaa"
-            };
-            
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 20, density: { enable: false } },
-                    color: { value: theme.particleColor },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: theme.particleLinks,
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: { 
-                        enable: true, 
-                        speed: 2, 
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: { 
-                        onhover: { enable: false },
-                        onclick: { enable: false },
-                        resize: true 
-                    }
-                },
-                retina_detect: false
-            });
-        });
-    </script>
-    
-    <!-- Include shared.js for Discord widget -->
-    <script src="scripts/utilities/shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      VANTA.FOG({
+        el: "vanta-fog",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0x7c81a2,
+        midtoneColor: 0x0,
+        lowlightColor: 0x6363c5,
+        speed: 1.60,
+        zoom: 0.70
+      });
+    });
+  </script>
+  
+  <script>
+// Add smooth transitions when clicking the home button
+document.querySelector('.home-button').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    window.location.href = '/index.html';
+  }, 300);
+});
 
-    <script>
-        // Emergency Escape Settings
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize emergency escape settings
-            const escapeSiteInput = document.getElementById('escapeSiteInput');
-            const recordSequenceButton = document.getElementById('recordSequenceButton');
-            const currentEscapeSequence = document.getElementById('currentEscapeSequence');
-            const escapeStatusBox = document.getElementById('escapeStatusBox');
-            const escapeStatus = document.getElementById('escapeStatus');
-            
-            // Load saved settings
-            const savedSite = localStorage.getItem('escapeSite');
-            const savedSequence = localStorage.getItem('escapeKeySequence');
-            
-            if (savedSite) {
-                escapeSiteInput.value = savedSite;
-            }
-            
-            if (savedSequence) {
-                try {
-                    const sequence = JSON.parse(savedSequence);
-                    updateSequenceDisplay(sequence);
-                } catch (e) {
-                    console.error('error parsing saved key sequence', e);
-                }
-            }
-            
-            // Recording state
-            let isRecording = false;
-            let recordedKeys = [];
-            
-            // Handle record button click
-            recordSequenceButton.addEventListener('click', function() {
-                if (isRecording) {
-                    // Stop recording
-                    isRecording = false;
-                    recordSequenceButton.textContent = 'Record Keys';
-                    recordSequenceButton.style.backgroundColor = '';
-                    
-                    if (recordedKeys.length > 0) {
-                        updateSequenceDisplay(recordedKeys);
-                    }
-                } else {
-                    // Start recording
-                    isRecording = true;
-                    recordedKeys = [];
-                    recordSequenceButton.textContent = 'Press keys... (Click to stop)';
-                    recordSequenceButton.style.backgroundColor = '#dc3545';
-                    
-                    showStatus('recording key sequence... press keys now!', 'info');
-                }
-            });
-            
-            // Listen for key presses when recording
-            document.addEventListener('keydown', function(e) {
-                if (isRecording) {
-                    // Prevent default actions for keys
-                    e.preventDefault();
-                    
-                    // Record the key with modifiers
-                    recordedKeys.push({
-                        key: e.key,
-                        ctrlKey: e.ctrlKey,
-                        altKey: e.altKey,
-                        shiftKey: e.shiftKey,
-                        metaKey: e.metaKey
-                    });
-                    
-                    // Update display in real-time
-                    updateSequenceDisplay(recordedKeys);
-                    
-                    // If we have 3 or more keys, stop recording automatically
-                    if (recordedKeys.length >= 3) {
-                        isRecording = false;
-                        recordSequenceButton.textContent = 'Record Keys';
-                        recordSequenceButton.style.backgroundColor = '';
-                        
-                        showStatus('key sequence recorded!', 'success');
-                    }
-                }
-            });
-            
-            // Function to update the sequence display
-            function updateSequenceDisplay(sequence) {
-                if (!sequence || sequence.length === 0) {
-                    currentEscapeSequence.textContent = 'no sequence set';
-                    return;
-                }
-                
-                const keyNames = sequence.map(k => {
-                    let name = '';
-                    if (k.ctrlKey) name += 'Ctrl + ';
-                    if (k.altKey) name += 'Alt + ';
-                    if (k.shiftKey) name += 'Shift + ';
-                    if (k.metaKey) name += 'Meta + ';
-                    
-                    // Format special keys nicely
-                    let keyName = k.key;
-                    if (keyName === ' ') keyName = 'Space';
-                    if (keyName === 'Escape') keyName = 'ESC';
-                    
-                    name += keyName;
-                    return name;
-                });
-                
-                currentEscapeSequence.textContent = keyNames.join(' → ');
-            }
-            
-            // Function to show status messages
-            function showStatus(message, type) {
-                escapeStatusBox.style.display = 'block';
-                escapeStatus.textContent = message;
-                
-                if (type === 'success') {
-                    escapeStatusBox.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
-                    escapeStatus.style.color = '#28a745';
-                } else if (type === 'error') {
-                    escapeStatusBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
-                    escapeStatus.style.color = '#dc3545';
-                } else {
-                    escapeStatusBox.style.backgroundColor = 'rgba(0, 123, 255, 0.2)';
-                    escapeStatus.style.color = '#0d6efd';
-                }
-                
-                setTimeout(() => {
-                    escapeStatusBox.style.display = 'none';
-                }, 5000);
-            }
-            
-            // Save emergency escape settings
-            window.saveEscapeSettings = function() {
-                const site = escapeSiteInput.value.trim();
-                
-                if (!site) {
-                    showStatus('please enter a valid URL', 'error');
-                    return;
-                }
-                
-                if (!site.startsWith('http://') && !site.startsWith('https://')) {
-                    showStatus('URL must start with http:// or https://', 'error');
-                    return;
-                }
-                
-                if (recordedKeys.length === 0) {
-                    showStatus('please record a key sequence first', 'error');
-                    return;
-                }
-                
-                // Save settings
-                localStorage.setItem('escapeSite', site);
-                localStorage.setItem('escapeKeySequence', JSON.stringify(recordedKeys));
-                
-                // Update emergency escape
-                if (typeof updateEmergencyEscape === 'function') {
-                    updateEmergencyEscape(recordedKeys, site);
-                }
-                
-                showStatus('emergency escape settings saved!', 'success');
-            };
-        });
-    </script>
-
-    <script>
-        // Theme Changer JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all theme circles
-            const themeCircles = document.querySelectorAll('.theme-circle');
-            
-            // Add click event to each circle
-            themeCircles.forEach(circle => {
-                circle.addEventListener('click', function() {
-                    const theme = this.getAttribute('data-theme');
-                    
-                    // Apply the selected theme
-                    if (window.applyTheme) {
-                        window.applyTheme(theme);
-                        
-                        // Add active state to selected theme
-                        themeCircles.forEach(c => {
-                            c.style.transform = '';
-                            c.style.boxShadow = '0 0 5px rgba(255,255,255,0.7)';
-                        });
-                        
-                        this.style.transform = 'scale(1.2)';
-                        this.style.boxShadow = '0 0 20px rgba(255,255,255,1)';
-                    } else {
-                        console.error('Theme function not available');
-                    }
-                });
-                
-                // Add hover effect
-                circle.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.1)';
-                    this.style.boxShadow = '0 0 15px rgba(255,255,255,0.9)';
-                });
-                
-                circle.addEventListener('mouseleave', function() {
-                    // Only reset if not the active theme
-                    const currentTheme = localStorage.getItem('selectedTheme') || 'default';
-                    if (this.getAttribute('data-theme') !== currentTheme) {
-                        this.style.transform = '';
-                        this.style.boxShadow = '0 0 5px rgba(255,255,255,0.7)';
-                    }
-                });
-            });
-            
-            // Set active state on the current theme
-            const currentTheme = localStorage.getItem('selectedTheme') || 'default';
-            const activeTheme = document.querySelector('.theme-circle[data-theme="' + currentTheme + '"]');
-            if (activeTheme) {
-                activeTheme.style.transform = 'scale(1.2)';
-                activeTheme.style.boxShadow = '0 0 20px rgba(255,255,255,1)';
-            }
-            
-            // Function to show theme status
-            function showThemeStatus(message, color) {
-                const statusElement = document.getElementById('theme-status');
-                if (statusElement) {
-                    statusElement.textContent = message;
-                    statusElement.style.backgroundColor = color;
-                    statusElement.style.display = 'block';
-                    setTimeout(function() {
-                        statusElement.style.display = 'none';
-                    }, 3000);
-                }
-            }
-        });
-    </script>
-
-
-    <script>
-        // Show a settings message
-        // Message removed as requested
-    </script>
-
-        </script>
-            <script>
-        // Show a welcome message on homepage
-        setTimeout(function() {
-            showGlowingMessage('welcome to settings! to get started change the theme at the bottom :)');
-        }, 1500);
-    </script>
-
-             <script>
-        // Function to show the popup
-        function showPopup() {
-            const popup = document.getElementById("popup");
-            popup.classList.add("show");
-
-            // Auto-close after 5 seconds
-            setTimeout(() => {
-                closePopup();
-            }, 5000);
-        }
-
-        // Function to close the popup
-        function closePopup() {
-            const popup = document.getElementById("popup");
-            popup.classList.remove("show");
-        }
-
-        // Show the popup after 1 second
-        setTimeout(showPopup, 1000);
-    </script>
-    
+// Add entrance animations when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.opacity = '1';
+  }, 100);
+});
+</script>
+  
 </body>
 </html>
