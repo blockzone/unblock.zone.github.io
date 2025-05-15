@@ -1578,7 +1578,7 @@ body {
     <span class="close-button" onclick="closePopup('embed-code-popup')">×</span>
     <hr>
     <div class="embed-code-container">
-      <div id="embed-code-text">https://newunblockzone.github.io/active/iframe.html#https://</div>
+      <div id="embed-code-text">https://thisunblockzone.github.io/active/iframe.html#https://</div>
     </div>
     <button class="copy-button" onclick="copyEmbedCode()">copy</button>
   </div>
@@ -1696,7 +1696,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateIframe(originalUrl) {
       const cleanedUrl = originalUrl.replace(/^https?:\/\//, '');
-      const proxiedUrl = "https://newunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+      const proxiedUrl = "https://thisunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
 
       mainFrame.src = proxiedUrl;
       mainFrame.style.display = "block";
@@ -1706,7 +1706,7 @@ document.addEventListener('DOMContentLoaded', () => {
       urlBar.value = originalUrl;
       currentUrl = originalUrl;
 
-      embedCodeText.textContent = "https://newunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+      embedCodeText.textContent = "https://thisunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
 
       bookmarkIcon.classList.toggle('bookmarked', bookmarks.some(bookmark => bookmark.url === currentUrl));
     }
@@ -2083,7 +2083,7 @@ class TabManager {
       const iframe = document.getElementById(tab.iframeId);
       if (iframe) {
         const cleanedUrl = url.replace(/^https?:\/\//, '');
-        const proxiedUrl = "https://newunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+        const proxiedUrl = "https://thisunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
         iframe.src = proxiedUrl;
         iframe.style.display = 'block';
       }
@@ -2137,7 +2137,7 @@ class TabManager {
 
 function updateIframe(originalUrl) {
   const cleanedUrl = originalUrl.replace(/^https?:\/\//, '');
-  const proxiedUrl = "https://newunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+  const proxiedUrl = "https://thisunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
 
   const activeTab = tabManager.getActiveTab();
   if (activeTab) {
@@ -2156,7 +2156,7 @@ function updateIframe(originalUrl) {
   
   tabManager.updateActiveTab(originalUrl);
 
-  embedCodeText.textContent = "https://newunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
+  embedCodeText.textContent = "https://thisunblockzone.github.io/active/iframe.html#https://" + cleanedUrl;
   bookmarkIcon.classList.toggle('bookmarked', bookmarks.some(bookmark => bookmark.url === currentUrl));
 }
 
