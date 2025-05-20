@@ -770,17 +770,20 @@ display: none; /* Show only when has favorites */
 display: block;
 }
 
-/* Update the games container positioning */
 .games-container {
-position: absolute;
-top: 600%;
-left: 55%; /* Moved from 60% to 55% (a medium tad left) */
-transform: translate(-50%, -50%);
-display: flex;
-flex-direction: column;
-gap: 1.5rem;
-z-index: 5;
+  position: relative; /* or absolute if you need fine positioning */
+  top: 4500px; /* very top */
+  left: 0;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 5;
+  padding: 2rem;
+  margin-left: 6vw;
+  width: calc(100% - 6vw);
 }
+
 
 /* Update the games title positioning */
 .games-title {
@@ -900,18 +903,18 @@ pointer-events: none;
   list-style-type: none;
   width: 100%;
 
-      /* Update the games container positioning */
+/* Update the games container positioning */
 .games-container {
-  position: relative; /* Changed from absolute */
-  top: 0;
+  position: relative;
+  top: 0; /* Moved up from 25px to 0 */
   left: 0;
-  transform: none; /* Remove transform */
+  transform: none;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   z-index: 5;
   padding: 2rem;
-  margin-left: 6vw; /* Add margin to account for sidebar */
+  margin-left: 6vw;
   width: calc(100% - 6vw);
 }
 
@@ -919,21 +922,20 @@ pointer-events: none;
 .flip-container {
   display: flex;
   gap: 1.5rem;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 /* Make flip cards responsive */
 .flip-card {
-  width: 320px; /* Fixed width */
-  min-width: 280px; /* Minimum width */
-  flex: 0 1 calc(33.333% - 1.5rem); /* Flex basis for 3 cards per row with gap */
+  width: 320px;
+  min-width: 280px;
+  flex: 0 1 calc(33.333% - 1.5rem);
 }
 
-/* Media queries for different screen sizes */
 @media screen and (max-width: 1200px) {
   .flip-card {
-    flex: 0 1 calc(50% - 1.5rem); /* 2 cards per row */
+    flex: 0 1 calc(50% - 1.5rem);
   }
 }
 
@@ -942,17 +944,17 @@ pointer-events: none;
     margin-left: 0;
     width: 100%;
   }
-  
+
   .flip-card {
-    flex: 0 1 100%; /* 1 card per row */
+    flex: 0 1 100%;
   }
-  
+
   .sidebar {
     width: 100%;
     height: auto;
     position: relative;
   }
-  
+
   .sidebar ul {
     flex-direction: row;
     justify-content: center;
@@ -960,22 +962,20 @@ pointer-events: none;
   }
 }
 
-/* Optional: Add smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Update main content area */
 .content-area {
   padding-top: 0;
   overflow-y: auto;
   height: 100vh;
 }
 
-/* Hide horizontal scrollbar */
 body {
   overflow-x: hidden;
 }
+
 
 
 </style>
@@ -2820,7 +2820,7 @@ body {
 <div class="flip-card-back">
 <img src="https://i.ytimg.com/vi/KVAyC2DAlXw/maxresdefault.jpg" class="flip-card-back-image" alt="Game 3 Background">
 <div class="flip-card-title">tunnel rush</div>
-<div class="flip-card-description">temple run 2 is an endless runner where you dodge traps and escape with a cursed idol.</div>
+<div class="flip-card-description">dash through a fast-paced tunnel, dodge obstacles, and test your reflexes</div>
 <div class="flip-card-play">Play Now</div>
 </div>
 </div>
