@@ -900,6 +900,83 @@ pointer-events: none;
   list-style-type: none;
   width: 100%;
 
+      /* Update the games container positioning */
+.games-container {
+  position: relative; /* Changed from absolute */
+  top: 0;
+  left: 0;
+  transform: none; /* Remove transform */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 5;
+  padding: 2rem;
+  margin-left: 6vw; /* Add margin to account for sidebar */
+  width: calc(100% - 6vw);
+}
+
+/* Update flip container for mobile responsiveness */
+.flip-container {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center;
+}
+
+/* Make flip cards responsive */
+.flip-card {
+  width: 320px; /* Fixed width */
+  min-width: 280px; /* Minimum width */
+  flex: 0 1 calc(33.333% - 1.5rem); /* Flex basis for 3 cards per row with gap */
+}
+
+/* Media queries for different screen sizes */
+@media screen and (max-width: 1200px) {
+  .flip-card {
+    flex: 0 1 calc(50% - 1.5rem); /* 2 cards per row */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .games-container {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .flip-card {
+    flex: 0 1 100%; /* 1 card per row */
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .sidebar ul {
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem;
+  }
+}
+
+/* Optional: Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Update main content area */
+.content-area {
+  padding-top: 0;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* Hide horizontal scrollbar */
+body {
+  overflow-x: hidden;
+}
+
 
 </style>
 </head>
@@ -1811,14 +1888,14 @@ pointer-events: none;
 <div class="flip-card-back">
 <img src="https://i.ytimg.com/vi/4EP4SrPozv4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAq0_gD8fjSXNwQI-WmsqpWaWYJdA" class="flip-card-back-image" alt="Game 3 Background">
 <div class="flip-card-title">granny 2</div>
-<div class="flip-card-description">granny 2 is a horror escape game like the original, but now you’re trapped with both granny and grandpa, making it harder to sneak out alive.</div>
+<div class="flip-card-description">granny 2 is a horror escape game like the original, but now you're trapped with both granny and grandpa, making it harder to sneak out alive.</div>
 <div class="flip-card-play">Play Now</div>
 </div>
 </div>
 </a>
 </div>
 
-      <div class="flip-container">
+<div class="flip-container">
 <a href="/g/gta.html" class="flip-card">
 <div class="flip-card-inner">
 <div class="flip-card-front">
@@ -1832,7 +1909,7 @@ pointer-events: none;
 </div>
 </div>
 </a>
-<a href="/g/granny-offline.html" class="flip-card">
+<a href="/g/gta-6.html" class="flip-card">
 <div class="flip-card-inner">
 <div class="flip-card-front">
 <img src="https://i.ytimg.com/vi/B8h7nO_UcXw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCG1lOyrwat4gAH9nKysUiH91PD8Q" alt="Game 2">
@@ -1840,7 +1917,7 @@ pointer-events: none;
 <div class="flip-card-back">
 <img src="https://i.ytimg.com/vi/B8h7nO_UcXw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCG1lOyrwat4gAH9nKysUiH91PD8Q" class="flip-card-back-image" alt="Game 2 Background">
 <div class="flip-card-title">gta 6</div>
-<div class="flip-card-description">next-gen open-world crime epic set in vice city with a dynamic duo and evolving story
+<div class="flip-card-description">next-gen open-world crime epic set in vice city with a dynamic duo and evolving story</div>
 <div class="flip-card-play">Play Now</div>
 </div>
 </div>
@@ -1860,15 +1937,14 @@ pointer-events: none;
 </a>
 </div>
 
-<!-- Replace the zoom-container with this -->
 <div class="flip-container">
 <a href="/g/granny-nightmare.html" class="flip-card">
 <div class="flip-card-inner">
 <div class="flip-card-front">
-<img src="https://i.ytimg.com/vi/-Re1_T42ctA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLClvMWNMrWcrPA5rwWN6pccSbbNcQ" alt="Game 4">
+<img src="https://i.ytimg.com/vi/-Re1_T42ctA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLClvMWNMrWcrPA5rwWN6pccSbbNcQ" alt="Game 1">
 </div>
 <div class="flip-card-back">
-<img src="https://i.ytimg.com/vi/-Re1_T42ctA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLClvMWNMrWcrPA5rwWN6pccSbbNcQ" class="flip-card-back-image" alt="Game 4 Background">
+<img src="https://i.ytimg.com/vi/-Re1_T42ctA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLClvMWNMrWcrPA5rwWN6pccSbbNcQ" class="flip-card-back-image" alt="Game 1 Background">
 <div class="flip-card-title">granny nightmare</div>
 <div class="flip-card-description">granny nightmare is a scarier version of the classic granny game, with darker visuals, creepier sounds, and tougher escape challenges.</div>
 <div class="flip-card-play">Play Now</div>
@@ -1878,10 +1954,10 @@ pointer-events: none;
 <a href="/g/hide-n-seek.html" class="flip-card">
 <div class="flip-card-inner">
 <div class="flip-card-front">
-<img src="https://i.ytimg.com/vi/c44fhvIiwic/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBB01YBA_L9h-SAhsjGzzZph_GdYA" alt="Game 5">
+<img src="https://i.ytimg.com/vi/c44fhvIiwic/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBB01YBA_L9h-SAhsjGzzZph_GdYA" alt="Game 2">
 </div>
 <div class="flip-card-back">
-<img src="https://i.ytimg.com/vi/c44fhvIiwic/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBB01YBA_L9h-SAhsjGzzZph_GdYA" class="flip-card-back-image" alt="Game 5 Background">
+<img src="https://i.ytimg.com/vi/c44fhvIiwic/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBB01YBA_L9h-SAhsjGzzZph_GdYA" class="flip-card-back-image" alt="Game 2 Background">
 <div class="flip-card-title">hide n seek</div>
 <div class="flip-card-description">hide n seek is a classic multiplayer game where one player is the seeker and the rest hide.</div>
 <div class="flip-card-play">Play Now</div>
@@ -1891,10 +1967,10 @@ pointer-events: none;
 <a href="/g/helix-jump.html" class="flip-card">
 <div class="flip-card-inner">
 <div class="flip-card-front">
-<img src="https://i.ytimg.com/vi/eKW0MZ4GCRk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUmqqh-2HBAqTFNUuyz6qMHUmpoQ" alt="Game 6">
+<img src="https://i.ytimg.com/vi/eKW0MZ4GCRk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUmqqh-2HBAqTFNUuyz6qMHUmpoQ" alt="Game 3">
 </div>
 <div class="flip-card-back">
-<img src="https://i.ytimg.com/vi/eKW0MZ4GCRk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUmqqh-2HBAqTFNUuyz6qMHUmpoQ" class="flip-card-back-image" alt="Game 6 Background">
+<img src="https://i.ytimg.com/vi/eKW0MZ4GCRk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUmqqh-2HBAqTFNUuyz6qMHUmpoQ" class="flip-card-back-image" alt="Game 3 Background">
 <div class="flip-card-title">helix jump</div>
 <div class="flip-card-description">bounce and twist your way down a spiral tower in this fast-paced, addictive jumper.</div>
 <div class="flip-card-play">Play Now</div>
@@ -1902,6 +1978,7 @@ pointer-events: none;
 </div>
 </a>
 </div>
+
 
 <div class="flip-container">
 <a href="/g/hole-io.html" class="flip-card">
