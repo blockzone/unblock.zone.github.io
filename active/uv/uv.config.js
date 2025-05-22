@@ -1,7 +1,7 @@
 
 self.__uv$config = {
     prefix: '/active/go/',
-    bare:'https://petezahserver.electronicajck.com/bare/',
+    bare:'https://bare.cbgames.org/ ',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/active/uv/uv.handler.js',
